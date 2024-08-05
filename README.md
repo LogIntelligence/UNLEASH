@@ -81,11 +81,20 @@ python 01_sampling.py
 ```bash
 cd examples
 export dataset=Apache
-python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path roberta-base --train_file ../datasets/loghub-2.0/$dataset/samples/entropy_32.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes 1 --output_dir ../results/models/$dataset --task_output_dir ../results/logs/$dataset
+python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path roberta-base --train_file ../datasets/loghub-2.0/$dataset/samples/entropy_32.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes 1 --output_dir ../results/models/$dataset --task_output_dir ../results/logs/$dataset --parsing_num_processes 1
 ```
+Set `parsing_num_processes` to the number of CPU cores you want to use for parsing. The results will be saved in the `results` folder.
 
 ### 3. To benchmark on all datasets
 ```bash
 cd examples
 python benchmark.py
 ```
+
+## Addtional Experimental Results
+
+### Comparison with Traditional Log Parsing Methods
+
+#### Accuracy
+
+#### Efficiency
