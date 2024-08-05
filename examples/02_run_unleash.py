@@ -22,7 +22,7 @@ from unleash.parsing_base import template_extraction
 
 from transformers import set_seed
 import logging
-from arguments import get_args
+from unleash.arguments import get_args
 import pandas as pd
 import torch
 

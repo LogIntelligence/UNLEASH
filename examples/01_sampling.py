@@ -111,7 +111,7 @@ benchmark = {
 
 
 if __name__ == '__main__':
-    data_dir = "/Users/vanhoangle/Documents/GitHub/finetuning4logparsing/datasets/loghub-2.0"
+    data_dir = "../datasets/loghub-2.0"
     output_dir = "../datasets/loghub-2.0"
     for dataset in datasets:
         print(dataset)
