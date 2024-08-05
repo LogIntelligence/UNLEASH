@@ -1,0 +1,14 @@
+accelerate
+ipython
+natsort
+nltk
+numpy
+pandas
+regex
+scikit_learn
+scipy
+textdistance
+torch
+tqdm
+transformers
+datasets
