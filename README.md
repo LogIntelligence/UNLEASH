@@ -292,20 +292,102 @@ table, th, td {
 
 #### Efficiency
 
-|             	| **UNLEASH (1 core)** 	| **UNLEASH (4 cores)** 	| **Drain** 	|
-|:-----------:	|:--------------------:	|:---------------------:	|:---------:	|
-|    Apache   	|         2.45         	|          2.46         	|    4.24   	|
-|     HDFS    	|        775.12        	|         190.10        	|  1,130.40 	|
-|    Hadoop   	|         13.24        	|         14.03         	|   18.83   	|
-|  Zookeeper  	|         1.80         	|          1.74         	|    9.63   	|
-|  HealthApp  	|         5.65         	|          4.99         	|   15.27   	|
-|     HPC     	|         5.48         	|          5.92         	|   32.66   	|
-|    Linux    	|         3.98         	|          4.04         	|    9.78   	|
-|   OpenSSH   	|         28.21        	|         12.00         	|   61.82   	|
-|  OpenStack  	|         14.94        	|         14.87         	|   73.01   	|
-|  Proxifier  	|         1.63         	|          1.61         	|    2.75   	|
-|     Mac     	|         52.15        	|         60.61         	|   17.58   	|
-|    Spark    	|        758.01        	|         247.63        	|  1,737.89 	|
-| Thunderbird 	|       8,561.71       	|        1,189.58       	|  2,071.28 	|
-|     BGL     	|        325.45        	|         128.28        	|   424.58  	|
-|   Average   	|        753.56        	|       **134.13**      	|   400.69  	|
+<table><thead>
+  <tr>
+    <th></th>
+    <th>UNLEASH (1 core)</th>
+    <th>UNLEASH (4 cores)</th>
+    <th>Drain</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td>Apache</td>
+    <td>2.45</td>
+    <td>2.46</td>
+    <td>4.24</td>
+  </tr>
+  <tr>
+    <td>HDFS</td>
+    <td>775.12</td>
+    <td>190.10</td>
+    <td>1,130.40</td>
+  </tr>
+  <tr>
+    <td>Hadoop</td>
+    <td>13.24</td>
+    <td>14.03</td>
+    <td>18.83</td>
+  </tr>
+  <tr>
+    <td>Zookeeper</td>
+    <td>1.80</td>
+    <td>1.74</td>
+    <td>9.63</td>
+  </tr>
+  <tr>
+    <td>HealthApp</td>
+    <td>5.65</td>
+    <td>4.99</td>
+    <td>15.27</td>
+  </tr>
+  <tr>
+    <td>HPC</td>
+    <td>5.48</td>
+    <td>5.92</td>
+    <td>32.66</td>
+  </tr>
+  <tr>
+    <td>Linux</td>
+    <td>3.98</td>
+    <td>4.04</td>
+    <td>9.78</td>
+  </tr>
+  <tr>
+    <td>OpenSSH</td>
+    <td>28.21</td>
+    <td>12.00</td>
+    <td>61.82</td>
+  </tr>
+  <tr>
+    <td>OpenStack</td>
+    <td>14.94</td>
+    <td>14.87</td>
+    <td>73.01</td>
+  </tr>
+  <tr>
+    <td>Proxifier</td>
+    <td>1.63</td>
+    <td>1.61</td>
+    <td>2.75</td>
+  </tr>
+  <tr>
+    <td>Mac</td>
+    <td>52.15</td>
+    <td>60.61</td>
+    <td>17.58</td>
+  </tr>
+  <tr>
+    <td>Spark</td>
+    <td>758.01</td>
+    <td>247.63</td>
+    <td>1,737.89</td>
+  </tr>
+  <tr>
+    <td>Thunderbird</td>
+    <td>8,561.71</td>
+    <td>1,189.58</td>
+    <td>2,071.28</td>
+  </tr>
+  <tr>
+    <td>BGL</td>
+    <td>325.45</td>
+    <td>128.28</td>
+    <td>424.58</td>
+  </tr>
+  <tr>
+    <td>Average</td>
+    <td>753.56</td>
+    <td><b>134.13</b></td>
+    <td><u>400.69</u></td>
+  </tr>
+</tbody></table>
