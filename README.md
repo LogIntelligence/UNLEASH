@@ -97,219 +97,198 @@ python benchmark.py
 
 #### Accuracy
 
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
-.tg .tg-7btt{border-color:inherit;font-weight:bold;text-align:center;vertical-align:top}
-.tg .tg-zw5y{border-color:inherit;text-align:center;text-decoration:underline;vertical-align:top}
+<style>
+table, th, td {
+  border: 1px solid black;
+}
 </style>
-<table class="tg"><thead>
+<table>
+<thead>
   <tr>
-    <th class="tg-c3ow"></th>
-    <th class="tg-7btt" colspan="4">UNLEASH</th>
-    <th class="tg-7btt" colspan="4">Drain</th>
-  </tr></thead>
+    <th></th>
+    <th colspan="4">UNLEASH</th>
+    <th colspan="4">Drain</th>
+  </tr>
+</thead>
 <tbody>
   <tr>
-    <td class="tg-c3ow"></td>
-    <td class="tg-c3ow">GA</td>
-    <td class="tg-c3ow">FGA</td>
-    <td class="tg-c3ow">PA</td>
-    <td class="tg-c3ow">FTA</td>
-    <td class="tg-c3ow">GA</td>
-    <td class="tg-c3ow">FGA</td>
-    <td class="tg-c3ow">PA</td>
-    <td class="tg-c3ow">FTA</td>
+    <td></td>
+    <td>GA</td>
+    <td>FGA</td>
+    <td>PA</td>
+    <td>FTA</td>
+    <td>GA</td>
+    <td>FGA</td>
+    <td>PA</td>
+    <td>FTA</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">Apache</td>
-    <td class="tg-c3ow">1.000</td>
-    <td class="tg-c3ow">1.000</td>
-    <td class="tg-c3ow">0.995</td>
-    <td class="tg-c3ow">0.800</td>
-    <td class="tg-c3ow">0.997</td>
-    <td class="tg-c3ow">0.949</td>
-    <td class="tg-c3ow">0.727</td>
-    <td class="tg-c3ow">0.508</td>
+    <td>Apache</td>
+    <td>1.000</td>
+    <td>1.000</td>
+    <td>0.995</td>
+    <td>0.800</td>
+    <td>0.997</td>
+    <td>0.949</td>
+    <td>0.727</td>
+    <td>0.508</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">HDFS</td>
-    <td class="tg-c3ow">1.000</td>
-    <td class="tg-c3ow">0.968</td>
-    <td class="tg-c3ow">1.000</td>
-    <td class="tg-c3ow">0.925</td>
-    <td class="tg-c3ow">0.999</td>
-    <td class="tg-c3ow">0.935</td>
-    <td class="tg-c3ow">0.57</td>
-    <td class="tg-c3ow">0.522</td>
+    <td>HDFS</td>
+    <td>1.000</td>
+    <td>0.968</td>
+    <td>1.000</td>
+    <td>0.925</td>
+    <td>0.999</td>
+    <td>0.935</td>
+    <td>0.57</td>
+    <td>0.522</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">Hadoop</td>
-    <td class="tg-c3ow">0.982</td>
-    <td class="tg-c3ow">0.948</td>
-    <td class="tg-c3ow">0.902</td>
-    <td class="tg-c3ow">0.740</td>
-    <td class="tg-c3ow">0.926</td>
-    <td class="tg-c3ow">0.791</td>
-    <td class="tg-c3ow">0.541</td>
-    <td class="tg-c3ow">0.383</td>
+    <td>Hadoop</td>
+    <td>0.982</td>
+    <td>0.948</td>
+    <td>0.902</td>
+    <td>0.740</td>
+    <td>0.926</td>
+    <td>0.791</td>
+    <td>0.541</td>
+    <td>0.383</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">Zookeeper</td>
-    <td class="tg-c3ow">1.000</td>
-    <td class="tg-c3ow">1.000</td>
-    <td class="tg-c3ow">0.938</td>
-    <td class="tg-c3ow">0.832</td>
-    <td class="tg-c3ow">0.994</td>
-    <td class="tg-c3ow">0.904</td>
-    <td class="tg-c3ow">0.844</td>
-    <td class="tg-c3ow">0.639</td>
+    <td>Zookeeper</td>
+    <td>1.000</td>
+    <td>1.000</td>
+    <td>0.938</td>
+    <td>0.832</td>
+    <td>0.994</td>
+    <td>0.904</td>
+    <td>0.844</td>
+    <td>0.639</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">HealthApp</td>
-    <td class="tg-c3ow">1.000</td>
-    <td class="tg-c3ow">1.000</td>
-    <td class="tg-c3ow">0.996</td>
-    <td class="tg-c3ow">0.936</td>
-    <td class="tg-c3ow">0.862</td>
-    <td class="tg-c3ow">0.01</td>
-    <td class="tg-c3ow">0.312</td>
-    <td class="tg-c3ow">0.004</td>
+    <td>HealthApp</td>
+    <td>1.000</td>
+    <td>1.000</td>
+    <td>0.996</td>
+    <td>0.936</td>
+    <td>0.862</td>
+    <td>0.01</td>
+    <td>0.312</td>
+    <td>0.004</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">HPC</td>
-    <td class="tg-c3ow">0.996</td>
-    <td class="tg-c3ow">0.940</td>
-    <td class="tg-c3ow">0.991</td>
-    <td class="tg-c3ow">0.808</td>
-    <td class="tg-c3ow">0.793</td>
-    <td class="tg-c3ow">0.309</td>
-    <td class="tg-c3ow">0.721</td>
-    <td class="tg-c3ow">0.147</td>
+    <td>HPC</td>
+    <td>0.996</td>
+    <td>0.940</td>
+    <td>0.991</td>
+    <td>0.808</td>
+    <td>0.793</td>
+    <td>0.309</td>
+    <td>0.721</td>
+    <td>0.147</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">Linux</td>
-    <td class="tg-c3ow">0.922</td>
-    <td class="tg-zw5y"><span style="font-style:italic">0.773</span></td>
-    <td class="tg-c3ow">0.852</td>
-    <td class="tg-c3ow">0.635</td>
-    <td class="tg-c3ow">0.805</td>
-    <td class="tg-c3ow"><span style="font-weight:bold">0.778</span></td>
-    <td class="tg-c3ow">0.111</td>
-    <td class="tg-c3ow">0.259</td>
+    <td>Linux</td>
+    <td>0.922</td>
+    <td><u>0.773</u></td>
+    <td>0.852</td>
+    <td>0.635</td>
+    <td>0.805</td>
+    <td><b>0.778</b></td>
+    <td>0.111</td>
+    <td>0.259</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">OpenSSH</td>
-    <td class="tg-c3ow">0.748</td>
-    <td class="tg-c3ow">0.877</td>
-    <td class="tg-c3ow">1.000</td>
-    <td class="tg-c3ow">0.904</td>
-    <td class="tg-c3ow">0.707</td>
-    <td class="tg-c3ow">0.872</td>
-    <td class="tg-c3ow">0.586</td>
-    <td class="tg-c3ow">0.487</td>
+    <td>OpenSSH</td>
+    <td>0.748</td>
+    <td>0.877</td>
+    <td>1.000</td>
+    <td>0.904</td>
+    <td>0.707</td>
+    <td>0.872</td>
+    <td>0.586</td>
+    <td>0.487</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">OpenStack</td>
-    <td class="tg-c3ow">1.000</td>
-    <td class="tg-c3ow">1.000</td>
-    <td class="tg-c3ow">1.000</td>
-    <td class="tg-c3ow">0.979</td>
-    <td class="tg-c3ow">0.752</td>
-    <td class="tg-c3ow">0.007</td>
-    <td class="tg-c3ow">0.029</td>
-    <td class="tg-c3ow">0.002</td>
+    <td>OpenStack</td>
+    <td>1.000</td>
+    <td>1.000</td>
+    <td>1.000</td>
+    <td>0.979</td>
+    <td>0.752</td>
+    <td>0.007</td>
+    <td>0.029</td>
+    <td>0.002</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">Proxifier</td>
-    <td class="tg-c3ow">1.000</td>
-    <td class="tg-c3ow">1.000</td>
-    <td class="tg-c3ow">1.000</td>
-    <td class="tg-c3ow">1.000</td>
-    <td class="tg-c3ow">0.692</td>
-    <td class="tg-c3ow">0.206</td>
-    <td class="tg-c3ow">0.688</td>
-    <td class="tg-c3ow">0.176</td>
+    <td>Proxifier</td>
+    <td>1.000</td>
+    <td>1.000</td>
+    <td>1.000</td>
+    <td>1.000</td>
+    <td>0.692</td>
+    <td>0.206</td>
+    <td>0.688</td>
+    <td>0.176</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">Mac</td>
-    <td class="tg-c3ow">0.913</td>
-    <td class="tg-c3ow">0.767</td>
-    <td class="tg-c3ow">0.747</td>
-    <td class="tg-c3ow">0.503</td>
-    <td class="tg-c3ow">0.761</td>
-    <td class="tg-c3ow">0.229</td>
-    <td class="tg-c3ow">0.357</td>
-    <td class="tg-c3ow">0.069</td>
+    <td>Mac</td>
+    <td>0.913</td>
+    <td>0.767</td>
+    <td>0.747</td>
+    <td>0.503</td>
+    <td>0.761</td>
+    <td>0.229</td>
+    <td>0.357</td>
+    <td>0.069</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">Spark</td>
-    <td class="tg-c3ow">0.985</td>
-    <td class="tg-c3ow">0.918</td>
-    <td class="tg-c3ow">0.850</td>
-    <td class="tg-c3ow">0.703</td>
-    <td class="tg-c3ow">0.889</td>
-    <td class="tg-c3ow">0.877</td>
-    <td class="tg-c3ow">0.394</td>
-    <td class="tg-c3ow">0.412</td>
+    <td>Spark</td>
+    <td>0.985</td>
+    <td>0.918</td>
+    <td>0.850</td>
+    <td>0.703</td>
+    <td>0.889</td>
+    <td>0.877</td>
+    <td>0.394</td>
+    <td>0.412</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">Thunderbird</td>
-    <td class="tg-c3ow">0.915</td>
-    <td class="tg-c3ow">0.848</td>
-    <td class="tg-c3ow">0.589</td>
-    <td class="tg-c3ow">0.441</td>
-    <td class="tg-c3ow">0.73</td>
-    <td class="tg-c3ow">0.236</td>
-    <td class="tg-c3ow">0.216</td>
-    <td class="tg-c3ow">0.071</td>
+    <td>Thunderbird</td>
+    <td>0.915</td>
+    <td>0.848</td>
+    <td>0.589</td>
+    <td>0.441</td>
+    <td>0.73</td>
+    <td>0.236</td>
+    <td>0.216</td>
+    <td>0.071</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">BGL</td>
-    <td class="tg-zw5y"><span style="font-style:italic">0.905</span></td>
-    <td class="tg-c3ow">0.924</td>
-    <td class="tg-c3ow">0.863</td>
-    <td class="tg-c3ow">0.771</td>
-    <td class="tg-c3ow"><span style="font-weight:bold">0.919</span></td>
-    <td class="tg-c3ow">0.62</td>
-    <td class="tg-c3ow">0.407</td>
-    <td class="tg-c3ow">0.193</td>
+    <td>BGL</td>
+    <td><u>0.905</u></td>
+    <td>0.924</td>
+    <td>0.863</td>
+    <td>0.771</td>
+    <td><b>0.919</b></td>
+    <td>0.62</td>
+    <td>0.407</td>
+    <td>0.193</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">Average</td>
-    <td class="tg-c3ow">0.955</td>
-    <td class="tg-c3ow">0.926</td>
-    <td class="tg-c3ow">0.909</td>
-    <td class="tg-c3ow">0.784</td>
-    <td class="tg-c3ow">0.845</td>
-    <td class="tg-c3ow">0.552</td>
-    <td class="tg-c3ow">0.465</td>
-    <td class="tg-c3ow">0.277</td>
+    <td>Average</td>
+    <td>0.955</td>
+    <td>0.926</td>
+    <td>0.909</td>
+    <td>0.784</td>
+    <td>0.845</td>
+    <td>0.552</td>
+    <td>0.465</td>
+    <td>0.277</td>
   </tr>
 </tbody></table>
-<!-- 
-|             	| UNLEASH 	|         	|       	|       	|   Drain   	|           	|       	|       	|
-|:-----------:	|:-------:	|:-------:	|:-----:	|:-----:	|:---------:	|:---------:	|:-----:	|:-----:	|
-|             	|    GA   	|   FGA   	|   PA  	|  FTA  	|     GA    	|    FGA    	|   PA  	|  FTA  	|
-|    Apache   	|  1.000  	|  1.000  	| 0.995 	| 0.800 	|   0.997   	|   0.949   	| 0.727 	| 0.508 	|
-|     HDFS    	|  1.000  	|  0.968  	| 1.000 	| 0.925 	|   0.999   	|   0.935   	|  0.57 	| 0.522 	|
-|    Hadoop   	|  0.982  	|  0.948  	| 0.902 	| 0.740 	|   0.926   	|   0.791   	| 0.541 	| 0.383 	|
-|  Zookeeper  	|  1.000  	|  1.000  	| 0.938 	| 0.832 	|   0.994   	|   0.904   	| 0.844 	| 0.639 	|
-|  HealthApp  	|  1.000  	|  1.000  	| 0.996 	| 0.936 	|   0.862   	|    0.01   	| 0.312 	| 0.004 	|
-|     HPC     	|  0.996  	|  0.940  	| 0.991 	| 0.808 	|   0.793   	|   0.309   	| 0.721 	| 0.147 	|
-|    Linux    	|  0.922  	| <u>_0.773_</u> 	| 0.852 	| 0.635 	|   0.805   	| **0.778** 	| 0.111 	| 0.259 	|
-|   OpenSSH   	|  0.748  	|  0.877  	| 1.000 	| 0.904 	|   0.707   	|   0.872   	| 0.586 	| 0.487 	|
-|  OpenStack  	|  1.000  	|  1.000  	| 1.000 	| 0.979 	|   0.752   	|   0.007   	| 0.029 	| 0.002 	|
-|  Proxifier  	|  1.000  	|  1.000  	| 1.000 	| 1.000 	|   0.692   	|   0.206   	| 0.688 	| 0.176 	|
-|     Mac     	|  0.913  	|  0.767  	| 0.747 	| 0.503 	|   0.761   	|   0.229   	| 0.357 	| 0.069 	|
-|    Spark    	|  0.985  	|  0.918  	| 0.850 	| 0.703 	|   0.889   	|   0.877   	| 0.394 	| 0.412 	|
-| Thunderbird 	|  0.915  	|  0.848  	| 0.589 	| 0.441 	|    0.73   	|   0.236   	| 0.216 	| 0.071 	|
-|     BGL     	| <u>_0.905_</u>	|  0.924  	| 0.863 	| 0.771 	| **0.919** 	|    0.62   	| 0.407 	| 0.193 	|
-|   Average   	|  0.955  	|  0.926  	| 0.909 	| 0.784 	|   0.845   	|   0.552   	| 0.465 	| 0.277 	| -->
+
 
 #### Efficiency
 
