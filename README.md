@@ -102,17 +102,20 @@ table, th, td {
   border: 1px solid black;
 }
 </style> -->
-<table>
-<thead>
+<table><thead>
   <tr>
     <th></th>
     <th colspan="4">UNLEASH</th>
     <th colspan="4">Drain</th>
-  </tr>
-</thead>
+    <th colspan="4">AEL</th>
+  </tr></thead>
 <tbody>
   <tr>
     <td></td>
+    <td>GA</td>
+    <td>FGA</td>
+    <td>PA</td>
+    <td>FTA</td>
     <td>GA</td>
     <td>FGA</td>
     <td>PA</td>
@@ -132,6 +135,10 @@ table, th, td {
     <td>0.949</td>
     <td>0.727</td>
     <td>0.508</td>
+    <td>1.000</td>
+    <td>1.000</td>
+    <td>0.727</td>
+    <td>0.517</td>
   </tr>
   <tr>
     <td>HDFS</td>
@@ -143,6 +150,10 @@ table, th, td {
     <td>0.935</td>
     <td>0.57</td>
     <td>0.522</td>
+    <td>0.999</td>
+    <td>0.764</td>
+    <td>0.621</td>
+    <td>0.562</td>
   </tr>
   <tr>
     <td>Hadoop</td>
@@ -154,6 +165,10 @@ table, th, td {
     <td>0.791</td>
     <td>0.541</td>
     <td>0.383</td>
+    <td>0.823</td>
+    <td>0.117</td>
+    <td>0.535</td>
+    <td>0.058</td>
   </tr>
   <tr>
     <td>Zookeeper</td>
@@ -165,6 +180,10 @@ table, th, td {
     <td>0.904</td>
     <td>0.844</td>
     <td>0.639</td>
+    <td>0.996</td>
+    <td>0.788</td>
+    <td>0.742</td>
+    <td>0.465</td>
   </tr>
   <tr>
     <td>HealthApp</td>
@@ -176,6 +195,10 @@ table, th, td {
     <td>0.01</td>
     <td>0.312</td>
     <td>0.004</td>
+    <td>0.725</td>
+    <td>0.008</td>
+    <td>0.311</td>
+    <td>0.003</td>
   </tr>
   <tr>
     <td>HPC</td>
@@ -187,6 +210,10 @@ table, th, td {
     <td>0.309</td>
     <td>0.721</td>
     <td>0.147</td>
+    <td>0.748</td>
+    <td>0.201</td>
+    <td>0.741</td>
+    <td>0.136</td>
   </tr>
   <tr>
     <td>Linux</td>
@@ -198,6 +225,10 @@ table, th, td {
     <td><b>0.778</b></td>
     <td>0.111</td>
     <td>0.259</td>
+    <td>0.916</td>
+    <td><b>0.806</b></td>
+    <td>0.082</td>
+    <td>0.217</td>
   </tr>
   <tr>
     <td>OpenSSH</td>
@@ -209,6 +240,10 @@ table, th, td {
     <td>0.872</td>
     <td>0.586</td>
     <td>0.487</td>
+    <td>0.705</td>
+    <td>0.689</td>
+    <td>0.364</td>
+    <td>0.333</td>
   </tr>
   <tr>
     <td>OpenStack</td>
@@ -220,6 +255,10 @@ table, th, td {
     <td>0.007</td>
     <td>0.029</td>
     <td>0.002</td>
+    <td>0.743</td>
+    <td>0.682</td>
+    <td>0.029</td>
+    <td>0.165</td>
   </tr>
   <tr>
     <td>Proxifier</td>
@@ -231,6 +270,10 @@ table, th, td {
     <td>0.206</td>
     <td>0.688</td>
     <td>0.176</td>
+    <td>0.974</td>
+    <td>0.667</td>
+    <td>0.677</td>
+    <td>0.417</td>
   </tr>
   <tr>
     <td>Mac</td>
@@ -242,6 +285,10 @@ table, th, td {
     <td>0.229</td>
     <td>0.357</td>
     <td>0.069</td>
+    <td>0.797</td>
+    <td>0.793</td>
+    <td>0.245</td>
+    <td>0.205</td>
   </tr>
   <tr>
     <td>Spark</td>
@@ -253,6 +300,10 @@ table, th, td {
     <td>0.877</td>
     <td>0.394</td>
     <td>0.412</td>
+    <td>___</td>
+    <td>___</td>
+    <td>___</td>
+    <td>___</td>
   </tr>
   <tr>
     <td>Thunderbird</td>
@@ -264,6 +315,10 @@ table, th, td {
     <td>0.236</td>
     <td>0.216</td>
     <td>0.071</td>
+    <td>0.786</td>
+    <td>0.116</td>
+    <td>0.163</td>
+    <td>0.035</td>
   </tr>
   <tr>
     <td>BGL</td>
@@ -275,6 +330,10 @@ table, th, td {
     <td>0.62</td>
     <td>0.407</td>
     <td>0.193</td>
+    <td><b>0.915</b></td>
+    <td>0.587</td>
+    <td>0.406</td>
+    <td>0.165</td>
   </tr>
   <tr>
     <td>Average</td>
@@ -286,108 +345,127 @@ table, th, td {
     <td>0.552</td>
     <td>0.465</td>
     <td>0.277</td>
+    <td>0.856</td>
+    <td>0.555</td>
+    <td>0.442</td>
+    <td>0.252</td>
   </tr>
 </tbody></table>
 
 
 #### Efficiency
-
 <table><thead>
   <tr>
     <th></th>
     <th>UNLEASH (1 core)</th>
     <th>UNLEASH (4 cores)</th>
     <th>Drain</th>
+    <th>AEL</th>
   </tr></thead>
 <tbody>
   <tr>
     <td>Apache</td>
-    <td>2.45</td>
-    <td>2.46</td>
-    <td>4.24</td>
+    <td>2.5</td>
+    <td>2.5</td>
+    <td>4.2</td>
+    <td>2.7</td>
   </tr>
   <tr>
     <td>HDFS</td>
-    <td>775.12</td>
-    <td>190.10</td>
-    <td>1,130.40</td>
+    <td>775.1</td>
+    <td>190.1</td>
+    <td>1,130.4</td>
+    <td>1403.0</td>
   </tr>
   <tr>
     <td>Hadoop</td>
-    <td>13.24</td>
-    <td>14.03</td>
-    <td>18.83</td>
+    <td>13.2</td>
+    <td>14.0</td>
+    <td>18.8</td>
+    <td>83.1</td>
   </tr>
   <tr>
     <td>Zookeeper</td>
-    <td>1.80</td>
-    <td>1.74</td>
-    <td>9.63</td>
+    <td>1.8</td>
+    <td>1.7</td>
+    <td>9.6</td>
+    <td>2.8</td>
   </tr>
   <tr>
     <td>HealthApp</td>
-    <td>5.65</td>
-    <td>4.99</td>
-    <td>15.27</td>
+    <td>5.7</td>
+    <td>5.0</td>
+    <td>15.3</td>
+    <td>349.5</td>
   </tr>
   <tr>
     <td>HPC</td>
-    <td>5.48</td>
-    <td>5.92</td>
-    <td>32.66</td>
+    <td>5.5</td>
+    <td>5.9</td>
+    <td>32.7</td>
+    <td>344.1</td>
   </tr>
   <tr>
     <td>Linux</td>
-    <td>3.98</td>
-    <td>4.04</td>
-    <td>9.78</td>
+    <td>4.0</td>
+    <td>4.0</td>
+    <td>9.8</td>
+    <td>3.9</td>
   </tr>
   <tr>
     <td>OpenSSH</td>
-    <td>28.21</td>
-    <td>12.00</td>
-    <td>61.82</td>
+    <td>28.2</td>
+    <td>12.0</td>
+    <td>61.8</td>
+    <td>344.1</td>
   </tr>
   <tr>
     <td>OpenStack</td>
-    <td>14.94</td>
-    <td>14.87</td>
-    <td>73.01</td>
+    <td>14.9</td>
+    <td>14.9</td>
+    <td>73.0</td>
+    <td>25.7</td>
   </tr>
   <tr>
     <td>Proxifier</td>
-    <td>1.63</td>
-    <td>1.61</td>
-    <td>2.75</td>
+    <td>1.6</td>
+    <td>1.6</td>
+    <td>2.8</td>
+    <td>2.8</td>
   </tr>
   <tr>
     <td>Mac</td>
-    <td>52.15</td>
-    <td>60.61</td>
-    <td>17.58</td>
+    <td>52.2</td>
+    <td>60.6</td>
+    <td>17.6</td>
+    <td>8.6</td>
   </tr>
   <tr>
     <td>Spark</td>
-    <td>758.01</td>
-    <td>247.63</td>
-    <td>1,737.89</td>
+    <td>758.0</td>
+    <td>247.6</td>
+    <td>1,737.9</td>
+    <td>___</td>
   </tr>
   <tr>
     <td>Thunderbird</td>
-    <td>8,561.71</td>
-    <td>1,189.58</td>
-    <td>2,071.28</td>
+    <td>8,561.7</td>
+    <td>1,189.6</td>
+    <td>2,071.3</td>
+    <td>11807.5</td>
   </tr>
   <tr>
     <td>BGL</td>
-    <td>325.45</td>
-    <td>128.28</td>
-    <td>424.58</td>
+    <td>325.5</td>
+    <td>128.3</td>
+    <td>424.6</td>
+    <td>9269.8</td>
   </tr>
   <tr>
     <td>Average</td>
-    <td>753.56</td>
-    <td><b>134.13</b></td>
-    <td><u>400.69</u></td>
+    <td>753.6</td>
+    <td><b>34.1</b></td>
+    <td>400.7</td>
+    <td>1793.6</td>
   </tr>
 </tbody></table>
