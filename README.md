@@ -464,7 +464,7 @@ table, th, td {
   <tr>
     <td>Average</td>
     <td>753.6</td>
-    <td><b>34.1</b></td>
+    <td><b>134.1</b></td>
     <td>400.7</td>
     <td>1793.6</td>
   </tr>
