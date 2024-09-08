@@ -103,45 +103,45 @@ def clean(s):
     return s, sorted_string
 
 
-def hierichical_clustering(contents):
+def hierarchical_clustering(contents):
     t1 = time.time()
     vocab = Vocab()
     vocab.build([v[0].split() for v in contents.values()])
     t2 = time.time()
     # print("Build time: ", t2 - t1)
 
-    # hierichical clustering
-    hierichical_clusters = {}
+    # hierarchical clustering
+    hierarchical_clusters = {}
     for k, v in contents.items():
         frequent_token = tuple(sorted(vocab.topk_tokens(v[0].split(), 3))) 
         log_format = v[1]
-        if frequent_token not in hierichical_clusters:
-            hierichical_clusters[frequent_token] = {"size": 1, "cluster": {log_format: [k]}}
+        if frequent_token not in hierarchical_clusters:
+            hierarchical_clusters[frequent_token] = {"size": 1, "cluster": {log_format: [k]}}
         else:
-            hierichical_clusters[frequent_token]["size"] = hierichical_clusters[frequent_token]["size"] + 1
-            if log_format not in hierichical_clusters[frequent_token]["cluster"]:
-                hierichical_clusters[frequent_token]["cluster"][log_format] = [k]
+            hierarchical_clusters[frequent_token]["size"] = hierarchical_clusters[frequent_token]["size"] + 1
+            if log_format not in hierarchical_clusters[frequent_token]["cluster"]:
+                hierarchical_clusters[frequent_token]["cluster"][log_format] = [k]
             else:
-                hierichical_clusters[frequent_token]["cluster"][log_format].append(k)
-    print("Number of coarse-grained clusters: ", len(hierichical_clusters.keys()))
+                hierarchical_clusters[frequent_token]["cluster"][log_format].append(k)
+    print("Number of coarse-grained clusters: ", len(hierarchical_clusters.keys()))
     total_fine_clusters = 0
-    for k, v in hierichical_clusters.items():
-        total_fine_clusters += len(hierichical_clusters[k]["cluster"])
+    for k, v in hierarchical_clusters.items():
+        total_fine_clusters += len(hierarchical_clusters[k]["cluster"])
     print("Number of fine-grained clusters: ", total_fine_clusters)
-    return hierichical_clusters
+    return hierarchical_clusters
 
 
-def hierichical_distribute(hierichical_clusters, shot, logs=[]):
-    # hierichical distribution
+def hierarchical_distribute(hierarchical_clusters, shot, logs=[]):
+    # hierarchical distribution
     candidate_samples = []
-    coarse_clusters = hierichical_clusters.keys()
+    coarse_clusters = hierarchical_clusters.keys()
     # coarse_clusters = shuffle(list(coarse_clusters))
-    coarse_clusters = sorted(coarse_clusters, key=lambda x: hierichical_clusters[x]["size"], reverse=True)
+    coarse_clusters = sorted(coarse_clusters, key=lambda x: hierarchical_clusters[x]["size"], reverse=True)
     corase_size = len(coarse_clusters)
     empty_clusters = []
     print("Shot: ", shot, "Coarse size: ", corase_size)
     # for coarse_key in coarse_clusters:
-    #     print(coarse_key, hierichical_clusters[coarse_key]["size"])
+    #     print(coarse_key, hierarchical_clusters[coarse_key]["size"])
     while shot > 0:
         for coarse_id, coarse_key in enumerate(coarse_clusters):
             if coarse_key in empty_clusters:
@@ -150,17 +150,17 @@ def hierichical_distribute(hierichical_clusters, shot, logs=[]):
             if coarse_quota == 0:
                 break
             
-            fine_clusters = hierichical_clusters[coarse_key]["cluster"].keys()
-            fine_clusters = sorted(fine_clusters, key=lambda x: len(hierichical_clusters[coarse_key]["cluster"][x]), reverse=True)
+            fine_clusters = hierarchical_clusters[coarse_key]["cluster"].keys()
+            fine_clusters = sorted(fine_clusters, key=lambda x: len(hierarchical_clusters[coarse_key]["cluster"][x]), reverse=True)
             fine_size = len(fine_clusters)
             cluster_size = 0
             for fine_id, fine_key in enumerate(fine_clusters):
                 fine_quota = min(shot, int(coarse_quota // fine_size) + (fine_id < coarse_quota % fine_size))
-                fine_quota = min(fine_quota, len(hierichical_clusters[coarse_key]["cluster"][fine_key]))
+                fine_quota = min(fine_quota, len(hierarchical_clusters[coarse_key]["cluster"][fine_key]))
                 if fine_quota == 0:
                     continue
                 # empty_cluster = False
-                cluster_ids = hierichical_clusters[coarse_key]["cluster"][fine_key]
+                cluster_ids = hierarchical_clusters[coarse_key]["cluster"][fine_key]
                 cluster_logs = [logs[i] for i in cluster_ids]
                 # print(fine_quota, len(cluster_logs))
                 # while fine_quota > 0 and len(cluster_logs) > 0:
@@ -172,7 +172,7 @@ def hierichical_distribute(hierichical_clusters, shot, logs=[]):
                 for i in sorted(samples_ids, reverse=True):
                     cluster_ids.pop(i)
                     cluster_logs.pop(i)
-                cluster_size += len(hierichical_clusters[coarse_key]["cluster"][fine_key])
+                cluster_size += len(hierarchical_clusters[coarse_key]["cluster"][fine_key])
             # print(coarse_key, cluster_size, shot)
             if cluster_size == 0:
                 empty_clusters.append(coarse_key)
@@ -190,14 +190,14 @@ def sampling(logs, labels=None, shots=[8]):
             contents[i] = (x, fx)
     # content = {i: clean(x) if len(x.split()) > 1 for i, x in enumerate(labelled_logs['Content'].tolist())}
     begin_time = time.time()
-    hierichical_clusters = hierichical_clustering(contents)
+    hierarchical_clusters = hierarchical_clustering(contents)
     end_time = time.time()
     clustering_time = end_time - begin_time
-    print("Hierichical clustering time: ", clustering_time)
+    print("hierarchical clustering time: ", clustering_time)
     sample_candidates = {}
     for idx, shot in enumerate(shots):
         begin_time = time.time()
-        sampled_ids = hierichical_distribute(deepcopy(hierichical_clusters), shot, logs)
+        sampled_ids = hierarchical_distribute(deepcopy(hierarchical_clusters), shot, logs)
         if labels is not None:
             samples = [(logs[i], labels[i]) for i in sampled_ids]
         else:
@@ -222,7 +222,7 @@ if __name__ == '__main__':
         raw_logs = labelled_logs['Content'].tolist()
         labels = labelled_logs['EventTemplate'].tolist()
         shots = [8, 16, 32, 64, 128, 256]
-        sample_candidates = hierichical_sampling(raw_logs, labels, shots)
+        sample_candidates = sampling(raw_logs, labels, shots)
         for shot, samples in sample_candidates.items():
             with open(f'{data_dir}/{dataset}/sampled_{shot}_v2.json', 'w') as f:
                 for sample in samples:
