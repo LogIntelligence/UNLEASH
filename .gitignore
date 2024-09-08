@@ -162,5 +162,5 @@ cython_debug/
 #.idea/
 .DS_Store
 
-datasets/loghub-2.0/*
+datasets/loghub-2.0/
 results/

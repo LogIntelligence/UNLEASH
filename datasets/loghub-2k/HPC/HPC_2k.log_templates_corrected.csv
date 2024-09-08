@@ -1,0 +1,47 @@
+EventID,EventTemplate,Occurrence
+E1,Linkerror event interval expired,394
+E2,ambient=<*>,292
+E3,normal,206
+E4,warning,205
+E5,running,162
+E6,configured out,91
+E7,Fan speeds ( <*> <*> <*> **** <*> <*> ),79
+E8,boot (command <*>),67
+E9,wait (command <*>),66
+E10,not responding,60
+E11,link errors remain current,56
+E12,NIFF: node <*> has detected an available network connection on network <*> via interface ee0,45
+E13,NIFF: node <*> has detected an available network connection on network <*> via interface alt0,44
+E14,ClusterFileSystem: ServerFileSystem domain <*> is no longer served by node <*>,36
+E15,ClusterFileSystem: There is no server for ServerFileSystem domain <*>,32
+E16,critical,20
+E17,blocked,15
+E18,Link error,13
+E19,Link ok,13
+E20,Component State Change: Component <*> is in the unavailable state (HWID=<*>),12
+E21,ServerFileSystem: ServerFileSystem domain <*> is full,12
+E22,Fan speeds ( <*> <*> <*> <*> <*> <*> ),11
+E23,Command has completed successfully,10
+E24,Link in reset,9
+E25,Targeting domains:<*> and nodes:node-[<*>-<*>] child of command <*>,5
+E26,psu failure\ ambient=<*>,5
+E27,active,5
+E28,Targeting domains:<*> nodes:<*>,4
+E29,Link error on broadcast tree Interconnect-<*>:<*>:<*>:<*>,4
+E30,inconsistent nodesets <*> <*> <ok> <*> <*> <ok> <*> <*> <ok> <*> <*> <*>,4
+E31,halt (command <*>),3
+E32,clusterAddMember (command <*>),2
+E33,bootGenvmunix (command <*>),2
+E34,Temperature (<*>) exceeds warning threshold,2
+E35,NIFF: node <*> detected a failed network connection on network <*> via interface alt0,2
+E36,NIFF: node <*> has detected an available network connection on network <*> via interface scip0,2
+E37,risBoot (command <*>),1
+E38,ServerFileSystem: An ServerFileSystem domain panic has occurred on <*>,1
+E39,Command has been aborted,1
+E40,power/control problem,1
+E41,not-responding,1
+E42,starting,1
+E43,closing,1
+E44,risBoot (command <*>) Error: Timed out while waiting for SRM prompt: <ABORT code completed>,1
+E45,boot (command <*>) Error: HALT asserted\ cannot continue,1
+E46,Failed subcommands <*>,1
