@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
-import sys
-sys.path.append('..')
-
 import pandas as pd
 import json
 import os
@@ -25,11 +21,9 @@ benchmark = {
 }
 
 
-
-
-if __name__ == '__main__':
-    data_dir = "../datasets/loghub-2k"
-    output_dir = "../datasets/loghub-2k"
+def test_sampling():
+    data_dir = "./datasets/loghub-2k"
+    output_dir = "./datasets/loghub-2k"
     for dataset in datasets:
         print(dataset)
         os.makedirs(f'{output_dir}/{dataset}/samples', exist_ok=True)
