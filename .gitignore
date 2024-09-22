@@ -164,3 +164,4 @@ cython_debug/
 
 datasets/loghub-2.0/
 results/
+*.json

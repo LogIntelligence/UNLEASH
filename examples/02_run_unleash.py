@@ -18,7 +18,7 @@ from unleash.models.roberta import RobertaForLogParsing
 from unleash.models.deberta import DebertaForLogParsing
 from unleash.data.data_loader import DataLoaderForPromptTuning
 from unleash.tuning.trainer import Trainer, TrainingArguments
-from unleash.parsing_base import template_extraction
+from unleash.parsing_base import template_extraction, template_extraction_joblib
 
 from transformers import set_seed
 import logging
@@ -104,7 +104,8 @@ if __name__ == "__main__":
 
     devices = [device] * common_args.parsing_num_processes
 
-    templates, model_time = template_extraction(p_model, devices, logs, vtoken=data_loader.vtoken)
+    # templates, model_time = template_extraction(p_model, devices, logs, vtoken=data_loader.vtoken)
+    templates, model_time = template_extraction_joblib(p_model, devices, logs, data_loader.vtoken)
     log_df['EventTemplate'] = pd.Series(templates)
 
     # Save the results

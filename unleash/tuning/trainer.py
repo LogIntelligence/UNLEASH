@@ -23,7 +23,7 @@ import numpy as np
 
 
 # filter_list = ["and", "or", "the", "a", "of", "to", "at"]
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("unleash")
 
 class TrainingArguments:
     def __init__(
