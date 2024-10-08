@@ -19,7 +19,21 @@ def verify_template(template):
     template = template.replace(" ", "")
     return any(char not in string.punctuation for char in template)
 
-def get_template(device, model, log_lines, vtoken):
+def get_template_line(device, model, log_line, vtoken, cache):
+    model.to(device)
+    model.eval()
+    log = " ".join(log_line.strip().split())
+    results = cache.match_event(log)
+    if results[0] != "NoMatch":
+        return results[0]
+    else:
+        template = model.parse(log, device=device, vtoken=vtoken)
+        if verify_template(template):
+            cache.add_templates(template, True, results[2])
+        return template
+
+
+def get_template_batch(device, model, log_lines, vtoken):
     model.to(device)
     model.eval()
     cache = ParsingCache()
@@ -62,7 +76,7 @@ def template_extraction_joblib(model, devices, log_lines, vtoken="virtual-param"
     get_template_cached = memory.cache(get_template)
 
     print("Starting template extraction")
-    with Parallel(n_jobs=len(devices)) as parallel:
+    with Parallel(n_jobs=len(devices), verbose=1) as parallel:
         t0 = time.time()
         results = parallel(delayed(get_template_cached)(devices[i], model, log_lines, vtoken) for i in range(len(devices)))
         templates = []
@@ -92,7 +106,7 @@ def template_extraction(model, devices, log_lines, vtoken="virtual-param"):
         pool = multiprocessing.Pool(processes=len(devices))
         results = []
         for i in range(len(devices)):
-            results.append(pool.apply_async(get_template, args=(devices[i], model, chunks[i], vtoken)))
+            results.append(pool.apply_async(get_template_batch, args=(devices[i], model, chunks[i], vtoken)))
         pool.close()
         pool.join()
         templates = []
