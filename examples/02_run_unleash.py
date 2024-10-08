@@ -18,7 +18,7 @@ from unleash.models.roberta import RobertaForLogParsing
 from unleash.models.deberta import DebertaForLogParsing
 from unleash.data.data_loader import DataLoaderForPromptTuning
 from unleash.tuning.trainer import Trainer, TrainingArguments
-from unleash.parsing_base import template_extraction, template_extraction_joblib
+from unleash.parsing_base import template_extraction
 
 from transformers import set_seed
 import logging
@@ -104,7 +104,7 @@ if __name__ == "__main__":
 
     devices = [device] * common_args.parsing_num_processes
 
-    templates, model_time = template_extraction(p_model, devices, logs, vtoken=data_loader.vtoken)
+    templates, model_time, model_invocations = template_extraction(p_model, devices, logs, vtoken=data_loader.vtoken)
     # templates, model_time = template_extraction_joblib(p_model, devices, logs, data_loader.vtoken)
     log_df['EventTemplate'] = pd.Series(templates)
 
@@ -131,7 +131,8 @@ if __name__ == "__main__":
     time_table[data_args.dataset_name] = {
         'TrainingTime': (t1 - t0).__round__(3),
         'ParsingTime': (t2 - t1).__round__(3),
-        'ModelTime': model_time.__round__(3)
+        'ModelTime': model_time.__round__(3),
+        'ModelInvocations': model_invocations
     }
     with open(time_cost_file, 'w') as file:
         json.dump(time_table, file)

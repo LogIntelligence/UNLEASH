@@ -1,12 +1,10 @@
 import time
 
 from unleash.parsing_cache import ParsingCache
-from unleash.postprocess import correct_single_template
 from tqdm import tqdm
 import string
 from multiprocessing import set_start_method
 import multiprocessing
-from joblib import Parallel, delayed, Memory
 
 try:
     set_start_method('spawn')
@@ -68,28 +66,6 @@ def get_template_batch(device, model, log_lines, vtoken):
             templates.append(template)
             pbar.update(1)
     return templates, model_time, len(cache_for_all_invocations.keys())
-
-
-def template_extraction_joblib(model, devices, log_lines, vtoken="virtual-param"):
-    cache_dir = "./cache"
-    memory = Memory(cache_dir, verbose=0)
-    get_template_cached = memory.cache(get_template)
-
-    print("Starting template extraction")
-    with Parallel(n_jobs=len(devices), verbose=1) as parallel:
-        t0 = time.time()
-        results = parallel(delayed(get_template_cached)(devices[i], model, log_lines, vtoken) for i in range(len(devices)))
-        templates = []
-        model_time = 0
-        no_of_invocations = 0
-        for result in results:
-            templates.extend(result[0])
-            model_time += result[1]
-            no_of_invocations += result[2]
-    print(f"Total time taken: {time.time() - t0}")
-    print(f"Total time taken by model: {model_time}")
-    print(f"No of model invocations: {no_of_invocations}")
-    return templates, model_time
 
 
 def template_extraction(model, devices, log_lines, vtoken="virtual-param"):
@@ -157,4 +133,4 @@ def template_extraction(model, devices, log_lines, vtoken="virtual-param"):
     print(f"Total time taken: {time.time() - t0}")
     print(f"No of model invocations: {len(cache_for_all_invocations.keys())}")
     print(f"Total time taken by model: {model_time}")
-    return templates, model_time
+    return templates, model_time, len(cache_for_all_invocations.keys())
