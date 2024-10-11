@@ -46,6 +46,8 @@ We choose a significance level of 0.05 (i.e., 5%) for all statistical tests. The
 
 <p align="center"><img src="docs/CL.png"></p>
 
+
+- **w/ CL**: Unleash with contrastive learning; AND **w/o CL**: Unleash without contrastive learning
 - Underlined values indicate the performance is similar (less than 1%)
 - Bold values indicate the performance is significantly different (more than 1%)
 
