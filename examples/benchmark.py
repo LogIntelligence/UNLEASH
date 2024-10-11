@@ -1,6 +1,6 @@
 import subprocess
 import argparse
-from evaluator import evaluate_all_datasets
+# from evaluator import evaluate_all_datasets
 
 datasets = [
     "Apache",
@@ -15,8 +15,8 @@ datasets = [
     "OpenStack",
     "Proxifier",
     "Spark",
-    "Thunderbird",
-    "Zookeeper"
+    "Zookeeper",
+    "Thunderbird"
 ]
 
 def parse_single_dataset(dataset_name, args):

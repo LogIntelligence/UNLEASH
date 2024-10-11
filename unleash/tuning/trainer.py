@@ -1,24 +1,11 @@
 import logging
 import math
 
-import datasets
 import torch
-from datasets import load_metric, Dataset
 
-from torch.utils.data import DataLoader
 from tqdm import tqdm
-from transformers import (
-    HfArgumentParser,
-    AutoConfig,
-    default_data_collator,
-    get_scheduler,
-    set_seed
-)
-# from accelerate import Accelerator
-import copy
-from typing import Any, Optional, Union, Dict, List, Callable, Tuple
-from unleash.tuning.early_stopping import EarlyStopping
-import numpy as np
+from transformers import get_scheduler
+from typing import Any, Optional
 
 
 
@@ -80,16 +67,9 @@ class Trainer:
         self.args = args
         self.train_loader = train_loader
         self.eval_loader = eval_loader
-        # self.tokenizer = tokenizer
         self.compute_metrics = compute_metrics
         self.no_train_samples = no_train_samples
-        # self.accelerator = accelerator
         self.device = device
-        # if callback:
-        #     self.callback = callback
-        # else:
-        #     self.callback = EarlyStopping(patience=10, verbose=False, path=self.args.output_dir)
-
         self.initialize()
     
     def initialize(self):

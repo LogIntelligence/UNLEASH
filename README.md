@@ -2,6 +2,75 @@
 Submission #1161: Unleashing the True Potential of Semantic-based Log Parsing with Pre-trained Language Models
 
 
+## Additional Experimental Results
+### Full Results of Observations 2 and 3
+
+### Statistical Significance
+
+We do not include the results of LLMParser because it cannot complete the parsing process for four datasets.
+
+_a) Standard Deviation and Interquartile Range_
+
+<p align="center"><img src="docs/S_test_1.png"></p>
+
+- Underlined values indicate the performance is similar (less than 1%)
+- Bold values indicate the performance is significantly different (more than 1%)
+
+_b) T-test Results_
+
+We choose a significance level of 0.05 (i.e., 5%) for all statistical tests. The p-values of the t-test results are as follows:
+- Unleash vs. LILAC: 
+  - GA: p-value = 0.9151677583898303
+  - FGA: p-value = 0.9803747149687504
+  - PA: p-value = 0.22011411219983273
+  - FTA: p-value = 0.6450456537049127
+  
+  _**Conclusion**_: No statistically significant difference between the results of Unleash and LILAC because all p-values are greater than 0.05.
+- Unleash vs. LogPPT:
+  - GA: p-value = 9.968914217004282e-05
+  - FGA: p-value = 0.00014706781262493215
+  - PA: p-value = 0.048055165591065895
+  - FTA: p-value = 0.001830514337749846
+
+  _**Conclusion**_: Statistically significant difference between the results of Unleash and LogPPT because all p-values are less than 0.05.
+- Unleash vs. UniParser:
+  - GA: p-value = 0.0024851241050090553
+  - FGA: p-value = 0.0005082079374612975
+  - PA: p-value = 0.02668628152056830
+  - FTA: p-value = 1.6245134777126656e-07
+
+  _**Conclusion**_: Statistically significant difference between the results of Unleash and UniParser because all p-values are less than 0.05.
+
+
+### Impact of Contrastive Learning
+
+<p align="center"><img src="docs/CL.png"></p>
+
+- Underlined values indicate the performance is similar (less than 1%)
+- Bold values indicate the performance is significantly different (more than 1%)
+
+
+
+### Model Invocation Times
+
+|             | UNLEASH | LILAC  |
+|:-----------:|---------|--------|
+|    Apache   |      29 |     29 |
+|     BGL     |    1886 |    331 |
+|    Hadoop   |     297 |    234 |
+|     HDFS    |      47 |     47 |
+|  HealthApp  |     156 |    121 |
+|     HPC     |      93 |     58 |
+|    Linux    |     442 |    340 |
+|     Mac     |     789 |    650 |
+|   OpenSSH   |      37 |     35 |
+|  OpenStack  |      48 |     48 |
+|  Proxifier  |      14 |     11 |
+|    Spark    |     241 |    239 |
+|  Zookeeper  |      88 |     90 |
+| Thunderbird |    1617 |   1219 |
+|   Average   |  413.14 | 246.57 |
+
 ## Introduction
 In this paper, we show that semantic-based log parsers with small PLMs can actually achieve better or comparable performance to state-of-the- art LLM-based log parsing models while being more efficient and cost-effective. We propose UNLEASH, a novel semantic-based log parsing approach, which incorporates three enhancement methods to boost the performance of PLMs for log parsing, including (1) an entropy-based ranking method to select the most informative log samples; (2) a contrastive learning method to enhance the fine-tuning process; and (3) an inference optimization method to improve the log parsing performance. We evaluate UNLEASH on a set of large-scale, public log datasets and the experimental results show that UNLEASH is effective and efficient compared to state-of-the-art log parsers.
 
