@@ -35,7 +35,7 @@ We choose a significance level of 0.05 (i.e., 5%) for all statistical tests. The
   
   _**Conclusion**_: No statistically significant difference between the results of Unleash and LILAC because all p-values are greater than 0.05.
 - Unleash vs. LogPPT:
-  - GA: p-value = 9.968914217004282e-05
+  - GA: p-value = 9.968914217004282E-05
   - FGA: p-value = 0.00014706781262493215
   - PA: p-value = 0.048055165591065895
   - FTA: p-value = 0.001830514337749846
@@ -45,7 +45,7 @@ We choose a significance level of 0.05 (i.e., 5%) for all statistical tests. The
   - GA: p-value = 0.0024851241050090553
   - FGA: p-value = 0.0005082079374612975
   - PA: p-value = 0.02668628152056830
-  - FTA: p-value = 1.6245134777126656e-07
+  - FTA: p-value = 1.6245134777126656E-07
 
   _**Conclusion**_: Statistically significant difference between the results of Unleash and UniParser because all p-values are less than 0.05.
 
