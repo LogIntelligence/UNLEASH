@@ -2,10 +2,18 @@
 Submission #1161: Unleashing the True Potential of Semantic-based Log Parsing with Pre-trained Language Models
 
 
-## Additional Experimental Results
-### Full Results of Observations 2 and 3
+## A. Additional Experimental Results
+### A.1. Full Results of Observations 2 and 3
 
-### Statistical Significance
+_a) Observation 2: Semantic visualization of keywords and parameters_
+
+<p align="center"><img src="docs/Ob2_res.png"></p>
+
+_b) Observation 3: Distribution of log templates_
+
+<p align="center"><img src="docs/Ob3_res.png"></p>
+
+### A.2. Statistical Significance
 
 We do not include the results of LLMParser because it cannot complete the parsing process for four datasets.
 
@@ -42,7 +50,7 @@ We choose a significance level of 0.05 (i.e., 5%) for all statistical tests. The
   _**Conclusion**_: Statistically significant difference between the results of Unleash and UniParser because all p-values are less than 0.05.
 
 
-### Impact of Contrastive Learning
+### A.3. Impact of Contrastive Learning
 
 <p align="center"><img src="docs/CL.png"></p>
 
@@ -53,7 +61,7 @@ We choose a significance level of 0.05 (i.e., 5%) for all statistical tests. The
 
 
 
-### Model Invocation Times
+### A.4. Model Invocation Times
 
 |             | UNLEASH | LILAC  |
 |:-----------:|---------|--------|
