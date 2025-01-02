@@ -213,6 +213,7 @@ def hierichical_distribute(hierichical_clusters, shot, labelled_logs=[]):
     corase_size = len(coarse_clusters)
     for coarse_id, coarse_key in enumerate(coarse_clusters):
         coarse_quota = int(shot // corase_size) + (coarse_id < shot % corase_size)
+        assert coarse_quota < sum([hierichical_clusters[x]["size"] for x in coarse_clusters]), "Coarse quota exceeds coarse cluster size"
         if coarse_quota == 0:
             break
         # print("Coarse quota: ", coarse_quota)
@@ -228,6 +229,8 @@ def hierichical_distribute(hierichical_clusters, shot, labelled_logs=[]):
             # print("Fine quota: ", fine_quota)
             # fine cluster of fine_key has been allocated {fine_quota}
             # print("Coarse key: ", coarse_key, " Fine key: ", fine_key, " Fine quota: ", fine_quota, " Corase quota: " , coarse_quota, len(hierichical_clusters[coarse_key]["cluster"][fine_key]))
+            if fine_quota < len(hierichical_clusters[coarse_key]["cluster"][fine_key]):
+                print("Fine quota exceeds fine cluster size")
             samples = random.choices(hierichical_clusters[coarse_key]["cluster"][fine_key], k=fine_quota)
             candidate_samples.extend(samples)
 
