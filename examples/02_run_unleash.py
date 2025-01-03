@@ -3,7 +3,7 @@ Command:
 ```bash
 cd examples
 export dataset=Apache
-python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path roberta-base --train_file ../datasets/loghub-2.0/$dataset/samples/entropy_32.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes 1 --output_dir ./results/models/$dataset --task_output_dir ./results/logs/$dataset --max_train_steps 100
+python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path roberta-base --train_file ../datasets/loghub-2.0/$dataset/samples/entropy_32.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes 1 --output_dir ./results/models/$dataset --task_output_dir ./results/logs --max_train_steps 100
 ```
 """
 
@@ -91,7 +91,8 @@ if __name__ == "__main__":
     )
     t0 = time.time()
     p_model = trainer.train()
-    trainer.save_pretrained(common_args.output_dir)
+    if common_args.save_model:
+        trainer.save_pretrained(f"{common_args.output_dir}/models/{data_args.dataset_name}")
 
     # Log Parsing
     log_df = pd.read_csv(data_args.log_file)
@@ -110,7 +111,7 @@ if __name__ == "__main__":
 
     # Save the results
     t2 = time.time()
-    task_output_dir = data_args.task_output_dir
+    task_output_dir = f"{common_args.output_dir}/logs"
     if not os.path.exists(task_output_dir):
         os.makedirs(task_output_dir)
     log_df.to_csv(f"{task_output_dir}/{data_args.dataset_name}_full.log_structured.csv", index=False)

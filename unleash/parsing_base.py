@@ -5,11 +5,14 @@ from tqdm import tqdm
 import string
 from multiprocessing import set_start_method
 import multiprocessing
+import logging
 
 try:
     set_start_method('spawn')
 except RuntimeError:
     pass
+
+logger = logging.getLogger("unleash")
 
 
 def verify_template(template):
@@ -70,7 +73,7 @@ def get_template_batch(device, model, log_lines, vtoken):
 
 def template_extraction(model, devices, log_lines, vtoken="virtual-param"):
 
-    print("Starting template extraction")
+    logger.info("Starting template extraction")
 
     #multi processing with multiple GPU devices
     if len(devices) > 1:
@@ -92,9 +95,9 @@ def template_extraction(model, devices, log_lines, vtoken="virtual-param"):
             templates.extend(result.get()[0])
             model_time += result.get()[1]
             no_of_invocations += result.get()[2]
-        print(f"Total time taken: {time.time() - t0}")
-        print(f"Total time taken by model: {model_time}")
-        print(f"No of model invocations: {no_of_invocations}")
+        logger.info(f"Total time taken: {time.time() - t0}")
+        logger.info(f"Total time taken by model: {model_time}")
+        logger.info(f"No of model invocations: {no_of_invocations}")
         return templates, model_time
     
     
@@ -130,7 +133,7 @@ def template_extraction(model, devices, log_lines, vtoken="virtual-param"):
             cache_for_all_invocations[log] = template
             templates.append(template)
             pbar.update(1)
-    print(f"Total time taken: {time.time() - t0}")
-    print(f"No of model invocations: {len(cache_for_all_invocations.keys())}")
-    print(f"Total time taken by model: {model_time}")
+    logger.info(f"Total time taken: {time.time() - t0}")
+    logger.info(f"No of model invocations: {len(cache_for_all_invocations.keys())}")
+    logger.info(f"Total time taken by model: {model_time}")
     return templates, model_time, len(cache_for_all_invocations.keys())

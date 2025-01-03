@@ -21,10 +21,10 @@ import csv
 from multiprocessing import Process
 
 from tqdm import tqdm
-from evaluation.utils.common import correct_templates_and_update_files
-from evaluation.utils.GA_calculator import evaluate
-from evaluation.utils.template_level_analysis import evaluate_template_level, evaluate_template_level_lstm
-from evaluation.utils.PA_calculator import calculate_parsing_accuracy, calculate_parsing_accuracy_lstm
+from unleash.evaluation.utils.common import correct_templates_and_update_files
+from unleash.evaluation.utils.GA_calculator import evaluate
+from unleash.evaluation.utils.template_level_analysis import evaluate_template_level, evaluate_template_level_lstm
+from unleash.evaluation.utils.PA_calculator import calculate_parsing_accuracy, calculate_parsing_accuracy_lstm
 import pandas as pd
 from .post_process import correct_single_template
 

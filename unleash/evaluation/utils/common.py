@@ -102,7 +102,7 @@ def common_args():
     parser.add_argument('--dataset', type=str,
                         help="Set this if you want to test on a specific dataset",
                         default='null')
-    parser.add_argument('--config', type=str,
+    parser.add_argument('--output_dir', type=str,
                         help="The file name of a specific configuration",
                         default='null', required=True)
     

@@ -18,28 +18,11 @@ import os
 
 sys.path.append('../')
 
-from evaluation.settings import benchmark_settings
-from evaluation.utils.common import common_args
-from evaluation.utils.evaluator_main import evaluator, prepare_results
-from evaluation.utils.postprocess import post_average
+from unleash.evaluation.settings import benchmark_settings
+from unleash.evaluation.utils.common import common_args
+from unleash.evaluation.utils.evaluator_main import evaluator, prepare_results
+from unleash.evaluation.utils.postprocess import post_average
 
-
-# datasets_2k = [
-#     "Proxifier",
-#     "Linux",
-#     "Apache",
-#     "Zookeeper",
-#     "Hadoop",
-#     "HealthApp",
-#     "OpenStack",
-#     "HPC",
-#     "Mac",
-#     "OpenSSH",
-#     "Spark",
-#     "Thunderbird",
-#     "BGL",
-#     "HDFS",
-# ]
 
 datasets_full = [
     "Proxifier",
@@ -58,17 +41,6 @@ datasets_full = [
     "Thunderbird",
 ]
 
-# datasets_full = [
-#     # "HealthApp",
-#     "Apache",
-#     "Zookeeper",
-#     # "Hadoop",
-#     "Mac",
-#     # "Linux",
-#     # "OpenSSH",
-#     # "Thunderbird"
-# ]
-
 
 if __name__ == "__main__":
     args = common_args()
@@ -78,7 +50,7 @@ if __name__ == "__main__":
         datasets = datasets_full
         data_type = "full"
         input_dir = "../datasets/loghub-2.0/"
-        output_dir = f"../examples/outputs/results/{args.config}" 
+        output_dir = f"{args.output_dir}/logs"
         if not os.path.exists(output_dir):
             raise FileNotFoundError(f"Output directory {output_dir} does not exist.")
     elif args.data_type == "2k":

@@ -74,11 +74,6 @@ class DataArguments:
         metadata={"help": "The name of the log file"}
     )
 
-    task_output_dir: Optional[str] = field(
-        default="outputs",
-        metadata={"help": "The output directory of the log analytic task"}
-    )
-    
     train_file: Optional[str] = field(
         default=None,
         metadata={"help": "A json file containing the training data."}
@@ -90,7 +85,7 @@ class DataArguments:
     )
     dev_file: Optional[str] = field(
         default=None,
-        metadata={"help": "A csv or a json file containing the validation data."}
+        metadata={"help": "A json file containing the validation data."}
     )
     text_column_name: Optional[str] = field(
         default=None,
@@ -141,6 +136,11 @@ class CommonArguments:
     parsing_num_processes: Optional[int] = field(
         default=1,
         metadata={"help": "number of processes for parsing"}
+    )
+
+    save_model: Optional[bool] = field(
+        default=False,
+        metadata={"help": "Whether to save the model"}
     )
 
 def get_args():
