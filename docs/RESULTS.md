@@ -9,11 +9,11 @@ In this paper, we show that semantic-based log parsers with small PLMs can actua
 
 _a) Observation 2: Semantic visualization of keywords and parameters_
 
-<p align="center"><img src="Ob2_res.png"></p>
+<p align="center"><img src="images/Ob2_res.png"></p>
 
 _b) Observation 3: Distribution of log templates_
 
-<p align="center"><img src="Ob3_res.png"></p>
+<p align="center"><img src="images/Ob3_res.png"></p>
 
 ### A.2. Statistical Significance
 
@@ -21,7 +21,7 @@ We do not include the results of LLMParser because it cannot complete the parsin
 
 _a) Standard Deviation and Interquartile Range_
 
-<p align="center"><img src="S_test_1.png"></p>
+<p align="center"><img src="images/S_test_1.png"></p>
 
 - Underlined values indicate the performance is similar (less than 1%)
 - Bold values indicate the performance is significantly different (more than 1%)
@@ -54,7 +54,7 @@ We choose a significance level of 0.05 (i.e., 5%) for all statistical tests. The
 
 ### A.3. Impact of Contrastive Learning
 
-<p align="center"><img src="CL.png"></p>
+<p align="center"><img src="images/CL.png"></p>
 
 
 - **w/ CL**: Unleash with contrastive learning; AND **w/o CL**: Unleash without contrastive learning

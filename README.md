@@ -9,51 +9,73 @@ __Table of Contents__
 
 ## Repository Structure
 ```
-├── datasets
-│   └── loghub-2.0
-│       ├── Apache
-│       │   ├── Apache_full.log_structured.csv
-│       │   ├── Apache_full.log_templates.csv
-│       │   ├── samples
-│       │   │   ├── entropy_32.json
-│       │   │   ├── lilac_32.json
-│       │   │   ├── logppt_32.json
-|       |   |   ├── ...
-│       │   └── validation.json
-│       ├── ...
-├── evaluation
-│   ├── utils
-│   ├── settings.py
-│   ├── unleash_eval.py
-├── examples
-│   ├── 01_sampling.py
-│   ├── 02_run_unleash.py
-│   ├── benchmark.py
-├── unleash
-│   ├── __init__.py
-│   ├── data
-│   │   ├── __init__.py
-│   │   ├── data_loader.py
-│   │   ├── utils.py
-│   ├── models
-│   │   ├── __init__.py
-│   │   ├── base.py
-│   │   ├── roberta.py
-│   |   ├── deberta.py
-│   ├── sampling
-│   │   ├── __init__.py
-│   │   ├── entropy_sampling.py
-│   │   ├── lilac_sampling.py
-│   │   ├── logppt_sampling.py
-│   |   ├── utils.py
-│   ├── tuning
-│   │   ├── __init__.py
-│   │   ├── early_stopping.py
-│   │   ├── trainer.py
-│   │   ├── utils.py
-│   ├── parsing_base.py
-│   ├── parsing_cache.py
-│   ├── postprocessing.py
+📦 UNLEASH
+├─ LICENSE
+├─ README.md
+├─ datasets
+│  └─ loghub-2.0
+│     ├─ Apache
+│     │  ├─ Apache_full.log
+│     │  ├─ Apache_full.log_structured.csv
+│     │  ├─ Apache_full.log_structured_corrected.csv
+│     │  ├─ Apache_full.log_templates.csv
+│     │  └─ Apache_full.log_templates_corrected.csv
+│     ├─ ...
+├─ dev.env
+├─ docs
+│  ├─ CL.png
+│  ├─ Ob2_res.png
+│  ├─ Ob3_res.png
+│  ├─ RESULTS.md
+│  └─ S_test_1.png
+├─ environment.yml
+├─ examples
+│  ├─ 01_sampling.py
+│  ├─ 02_run_unleash.py
+│  ├─ 03_evaluation.py
+│  ├─ benchmark.py
+│  └─ config.py
+├─ requirements.txt
+├─ setup.py
+├─ tests
+│  └─ test.py
+└─ unleash
+   ├─ __init__.py
+   ├─ arguments.py
+   ├─ data
+   │  ├─ __init__.py
+   │  ├─ data_loader.py
+   │  └─ utils.py
+   ├─ evaluation
+   │  ├─ settings.py
+   │  └─ utils
+   │     ├─ GA_calculator.py
+   │     ├─ PA_calculator.py
+   │     ├─ common.py
+   │     ├─ evaluator_main.py
+   │     ├─ oracle_template_correction.py
+   │     ├─ post_process.py
+   │     ├─ postprocess.py
+   │     └─ template_level_analysis.py
+   ├─ models
+   │  ├─ __init__.py
+   │  ├─ base.py
+   │  ├─ deberta.py
+   │  └─ roberta.py
+   ├─ parsing_base.py
+   ├─ parsing_cache.py
+   ├─ postprocess.py
+   ├─ sampling
+   │  ├─ __init__.py
+   │  ├─ entropy_sampling.py
+   │  ├─ lilac_sampling.py
+   │  ├─ logppt_sampling.py
+   │  └─ utils.py
+   └─ tuning
+      ├─ __init__.py
+      ├─ early_stopping.py
+      ├─ trainer.py
+      └─ utils.py
 ```
 
 
