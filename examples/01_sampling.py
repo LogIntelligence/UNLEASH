@@ -8,117 +8,59 @@ import pandas as pd
 import json
 import os
 
+from unleash.data.utils import generate_logformat_regex, log_to_dataframe
 from unleash.sampling.entropy_sampling import sampling as entropy_sampling
 from unleash.sampling.lilac_sampling import sampling as lilac_sampling
 from unleash.sampling.logppt_sampling import sampling as logppt_sampling
 
+from config import benchmark, datasets
 
-datasets = [
-    "Apache",
-    "BGL",
-    "Hadoop",
-    "HDFS",
-    "HealthApp",
-    "HPC",
-    "Linux",
-    "Mac",
-    "OpenSSH",
-    "OpenStack",
-    "Proxifier",
-    "Spark",
-    "Thunderbird",
-    "Zookeeper"
-]
+DOWNLOAD_URL = "https://zenodo.org/records/8275861/files/{}.zip"
 
-benchmark = {
-    'HDFS': {
-        'log_file': 'HDFS/HDFS_full.log',
-        'log_format': '<Date> <Time> <Pid> <Level> <Component>: <Content>',
-    },
-
-    'Hadoop': {
-        'log_file': 'Hadoop/Hadoop_full.log',
-        'log_format': '<SessionId> <Date> <Time> <Level> \[<Process>\] <Component>: <Content>',
-    },
-
-    'Spark': {
-        'log_file': 'Spark/Spark_full.log',
-        'log_format': '<Date> <Time> <Level> <Component>: <Content>',
-    },
-
-    'Zookeeper': {
-        'log_file': 'Zookeeper/Zookeeper_full.log',
-        'log_format': '<Date> <Time> - <Level>  \[<Node>:<Component>@<Id>\] - <Content>',
-    },
-
-    'BGL': {
-        'log_file': 'BGL/BGL_full.log',
-        'log_format': '<Label> <Timestamp> <Date> <Node> <Time> <NodeRepeat> <Type> <Component> <Level> <Content>',
-    },
-
-    'HPC': {
-        'log_file': 'HPC/HPC_full.log',
-        'log_format': '<LogId> <Node> <Component> <State> <Time> <Flag> <Content>',
-    },
-
-    'Thunderbird': {
-        'log_file': 'Thunderbird/Thunderbird_full.log',
-        'log_format': '<Label> <Timestamp> <Date> <User> <Month> <Day> <Time> <Location> <Component>(\[<PID>\])?: <Content>',
-    },
-
-    'Windows': {
-        'log_file': 'Windows/Windows_full.log',
-        'log_format': '<Date> <Time>, <Level>                  <Component>    <Content>',
-    },
-
-    'Linux': {
-        'log_file': 'Linux/Linux_full.log',
-        'log_format': '<Month> <Date> <Time> <Level> <Component>(\[<PID>\])?: <Content>',
-    },
-
-    'HealthApp': {
-        'log_file': 'HealthApp/HealthApp_full.log',
-        'log_format': '<Time>\|<Component>\|<Pid>\|<Content>',
-    },
-
-    'Apache': {
-        'log_file': 'Apache/Apache_full.log',
-        'log_format': '\[<Time>\] \[<Level>\] <Content>',
-    },
-
-    'Proxifier': {
-        'log_file': 'Proxifier/Proxifier_full.log',
-        'log_format': '\[<Time>\] <Program> - <Content>',
-    },
-
-    'OpenSSH': {
-        'log_file': 'OpenSSH/OpenSSH_full.log',
-        'log_format': '<Date> <Day> <Time> <Component> sshd\[<Pid>\]: <Content>',
-    },
-
-    'OpenStack': {
-        'log_file': 'OpenStack/OpenStack_full.log',
-        'log_format': '<Logrecord> <Date> <Time> <Pid> <Level> <Component> \[<ADDR>\] <Content>',
-    },
-
-    'Mac': {
-        'log_file': 'Mac/Mac_full.log',
-        'log_format': '<Month>  <Date> <Time> <User> <Component>\[<PID>\]( \(<Address>\))?: <Content>',
-    }
-}
-
+def load_loghub_dataset(dataset_name="Apache", cache_dir=None, format="csv", log_format=None):
+    """
+    Load from cache if available, otherwise download, unzip and cache the dataset
+    """
+    dataset_url = DOWNLOAD_URL.format(dataset_name)
+    print(dataset_url)
+    # Check if the dataset is already downloaded
+    if cache_dir is None:
+        cache_dir = os.path.join(os.path.expanduser("~"), ".cache", "unleash")
+    dataset_dir = os.path.join(cache_dir, dataset_name)
+    if not os.path.exists(dataset_dir):
+        os.makedirs(dataset_dir)
+        # Download the dataset
+        dataset_zip = os.path.join(cache_dir, f"{dataset_name}.zip")
+        os.system(f"wget {dataset_url} -O {dataset_zip}")
+        # Unzip the dataset
+        os.system(f"unzip {dataset_zip} -d {os.path.dirname(dataset_dir)}")
+        # Remove the zip file
+        os.remove(dataset_zip)
+    # Load the dataset
+    if format == "csv":
+        log_df = pd.read_csv(f"{dataset_dir}/{dataset_name}_full.log_structured.csv")
+    elif format == "text":
+        headers, regex = generate_logformat_regex(log_format)
+        log_df = log_to_dataframe(f"{dataset_dir}/{dataset_name}_full.log", regex, headers)
+    return log_df
 
 
 
 if __name__ == '__main__':
+
+    dname = sys.argv[1:]
     data_dir = "../datasets/loghub-2.0"
     output_dir = "../datasets/loghub-2.0"
     for dataset in datasets:
+        if dname != None and dataset not in dname:
+            continue
         print(dataset)
-        os.makedirs(f'{output_dir}/{dataset}/samples', exist_ok=True)
         log_file = benchmark[dataset]['log_file']
         print(f"Loading {log_file}...")
-        labelled_logs = pd.read_csv(f'{data_dir}/{log_file}_structured.csv')
+        labelled_logs = load_loghub_dataset(dataset, data_dir)
+
+        os.makedirs(f'{output_dir}/{dataset}/samples', exist_ok=True)
+        # pd.read_csv(f'{data_dir}/{log_file}_structured.csv')
         print(f"Loaded {len(labelled_logs)} logs.")
         k_rate = 0.2
         length = int(k_rate * len(labelled_logs))
