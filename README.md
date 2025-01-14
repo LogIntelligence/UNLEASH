@@ -209,6 +209,8 @@ cd examples
 bash benchmark/RQ1.sh
 ```
 
+The parsing accuracy (`parsing_accuracy.csv`) and parsing time (`time_cost.json`) will be saved in the corresponding folders in the `../results` directory (e.g., `../results/iteration_01/logs`). 
+
 ## Download Paper
 
 The paper is available at [ICSE_25___Unleash.pdf](ICSE_25___Unleash.pdf).

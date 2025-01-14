@@ -16,7 +16,7 @@ Copyright (C) 2022 University of Luxembourg
 import sys
 import os
 
-sys.path.append('../')
+# sys.path.append('../')
 
 from unleash.evaluation.settings import benchmark_settings
 from unleash.evaluation.utils.common import common_args

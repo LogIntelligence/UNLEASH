@@ -32,18 +32,16 @@ from .post_process import correct_single_template
 TIMEOUT = 3600 * 48  # log template identification timeout (sec)
 
 
-def prepare_results(output_dir, otc, complex, frequent):
+def prepare_results(output_dir):
     if not os.path.exists(output_dir):
         # make output directory
         os.makedirs(output_dir)
 
     # make a new summary file
-    result_file = 'summary_[otc={},complex={},frequent={}].csv'.format(str(otc), str(int(complex)), str(int(frequent)))
+    result_file = 'parsing_accuracy.csv'
     if not os.path.exists(os.path.join(output_dir, result_file)):
         with open(os.path.join(output_dir, result_file), 'w') as csv_file:
             fw = csv.writer(csv_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            # fw.writerow(['Dataset', 'GA_time', 'PA_time', 'TA_time', 'parse_time', 'identified_templates',
-            #              'ground_templates', 'GA', 'PA', 'FTA', 'PTA', 'RTA', 'OG', 'UG', 'MX'])
             fw.writerow(['Dataset', 'traning_time', 'parsing_time', 'identified_templates',
                         'ground_templates', 'GA', 'PA', 'FGA', 'PTA', 'RTA', 'FTA'])
 
