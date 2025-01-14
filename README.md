@@ -4,10 +4,32 @@ __UNLEASH__ is and end-to-end semantic-based log parsing framework. This reposit
 
 __Table of Contents__
 - [Repository Structure](#repository-structure)
-- [Requirements and Setup](#requirements-and-setup)
+- [Installation Instruction](#installation-instruction)
+    - [Install Python 3.9](#install-python-39)
+    - [Clone UNLEASH from GitHub](#clone-unleash-from-github)
+    - [Create and activate a virtual environment](#create-and-activate-a-virtual-environment)
+    - [Install UNLEASH from PyPI or Build from source](#install-unleash-from-pypi-or-build-from-source)
+    - [Test the installation](#test-the-installation)
 - [To run the code](#to-run-the-code)
+- [Reproducibility](#reproducibility)
+    - [RQ1 - Parsing Efficaicy](#rq1---parsing-efficaicy)
+    - [RQ2 - Scalability and Generalization](#rq2---scalability-and-generalization)
+    - [RQ3-5 - The Impact of Enhancement Mechanisms](#rq3---the-impact-of-enhancement-mechanisms)
+
+- [Download Paper](#download-paper)
+- [Citation](#citation)
+- [Contact](#contact)
 
 ## Repository Structure
+
+There are three main components in the repository:
+1. `datasets`: Contains the log datasets used in the experiments.
+2. `examples`: Contains the scripts to run the experiments.
+3. `unleash`: Contains the implementation of UNLEASH.
+
+<details>
+<Summary>The main structure of the repository would look like this</Summary>
+
 ```
 📦 UNLEASH
 ├─ LICENSE
@@ -21,7 +43,6 @@ __Table of Contents__
 │     │  ├─ Apache_full.log_templates.csv
 │     │  └─ Apache_full.log_templates_corrected.csv
 │     ├─ ...
-├─ dev.env
 ├─ docs
 │  ├─ CL.png
 │  ├─ Ob2_res.png
@@ -77,17 +98,61 @@ __Table of Contents__
       ├─ trainer.py
       └─ utils.py
 ```
+</details>
 
 
-## Requirements and Setup
-The code is implemented in Python 3.9. To install the required packages, run the following command:
+## Installation Instruction
+The code is implemented in Python 3.9.
+
+### Install Python 3.9
+We recommend using Python 3.9+ to run the code.
+```bash
+sudo apt update
+sudo apt install python3.9 python3.9-venv python3.9-dev
 ```
-pip install -r requirements.txt
+
+### Clone UNLEASH from GitHub
+
+```bash
+git clone https://github.com/LogIntelligence/UNLEASH.git && cd UNLEASH
 ```
-or import the environment.yml file to create a conda environment:
+
+### Create and activate a virtual environment
+We recommend creating a virtual environment to run the code.
+```bash
+python3.9 -m venv env
+source env/bin/activate
 ```
-conda env create -f environment.yml
+
+### Install UNLEASH from PyPI or Build from source
+You can install UNLEASH from PyPI or build from source.
+```bash
+# Install from PyPI
+pip install unleash
+
+# Build from source
+pip install -e .
 ```
+
+### Test the installation
+```bash
+pytest tests/test.py
+```
+
+<details>
+<Summary>Expected output</Summary>
+
+```bash
+============================= test session starts ==============================
+platform linux -- Python 3.9.7, pytest-6.2.5, pluggy-1.0.0
+rootdir: /home/username/UNLEASH
+collected 1 item
+
+tests/test.py .                                                         [100%]
+
+============================== 1 passed in 0.01s ===============================
+```
+</details>
 
 ## To run the code
 ### Download the data

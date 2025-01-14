@@ -1,69 +1,54 @@
 # -*- coding: utf-8 -*-
-
-import pandas as pd
-import json
-import os
-
+from unleash.data.utils import load_loghub_dataset
 from unleash.sampling.entropy_sampling import sampling as entropy_sampling
 from unleash.sampling.lilac_sampling import sampling as lilac_sampling
 from unleash.sampling.logppt_sampling import sampling as logppt_sampling
+from unleash.models.roberta import RobertaForLogParsing
+from unleash.models.deberta import DebertaForLogParsing
 
 
-datasets = [
-    "Apache"
-]
-
-benchmark = {
-    'Apache': {
-        'log_file': 'Apache/Apache_2k.log',
-        'log_format': '\[<Time>\] \[<Level>\] <Content>',
-    },
-}
+def test_load_loghub_dataset():
+    """Test the load_loghub_dataset function"""
+    log_df = load_loghub_dataset(dataset_name="Apache")
+    assert len(log_df) > 0, "Expected more than 0 logs in the Apache dataset"
 
 
 def test_sampling():
-    data_dir = "./datasets/loghub-2k"
-    output_dir = "./datasets/loghub-2k"
-    for dataset in datasets:
-        print(dataset)
-        os.makedirs(f'{output_dir}/{dataset}/samples', exist_ok=True)
-        log_file = benchmark[dataset]['log_file']
-        print(f"Loading {log_file}...")
-        labelled_logs = pd.read_csv(f'{data_dir}/{log_file}_structured.csv')
-        print(f"Loaded {len(labelled_logs)} logs.")
-        k_rate = 0.2
-        length = int(k_rate * len(labelled_logs))
-        labelled_logs = labelled_logs[:length]
-        raw_logs = labelled_logs['Content'].tolist()
-        labels = labelled_logs['EventTemplate'].tolist()
-        with open(f'{output_dir}/{dataset}/validation.json', 'w') as f:
-            for log, label in zip(raw_logs, labels):
-                f.write(json.dumps({'log': log, 'template': label}) + '\n')
-        shots = [32]
-        
-        ## Entropy Sampling ###
-        sample_candidates = entropy_sampling(raw_logs, labels, shots)
-        assert len(sample_candidates[32]) == 32, f"Expected 32 samples from entropy sampling, got {len(sample_candidates[32])}"
+    labelled_logs = load_loghub_dataset("Apache")
+    k_rate = 0.2
+    length = int(k_rate * len(labelled_logs))
+    labelled_logs = labelled_logs[:length]
+    raw_logs = labelled_logs['Content'].tolist()
+    labels = labelled_logs['EventTemplate'].tolist()
+    shots = [32]
+    
+    ## Entropy Sampling ###
+    sample_candidates = entropy_sampling(raw_logs, labels, shots)
+    assert len(sample_candidates[32]) == 32, "Expected 32 samples from entropy sampling"
 
-        for shot, samples in sample_candidates.items():
-            with open(f'{output_dir}/{dataset}/samples/entropy_{shot}.json', 'w') as f:
-                for sample in samples:
-                    f.write(json.dumps({'log': sample[0], 'template': sample[1]}) + '\n')
+    ## Hierichical Sampling from LILAC ###
+    sample_candidates = lilac_sampling(raw_logs, labels, shots)
+    assert len(sample_candidates[32]) == 32, "Expected 32 samples from LILAC sampling"
 
-        ## Hierichical Sampling from LILAC ###
-        sample_candidates = lilac_sampling(raw_logs, labels, shots)
-        assert len(sample_candidates[32]) == 32, f"Expected 32 samples from lilac sampling, got {len(sample_candidates[32])}"
+    ## Adaptive Random Sampling from LogPPT ###
+    sample_candidates = logppt_sampling(raw_logs, labels, shots)
+    assert len(sample_candidates[32]) == 32, "Expected 32 samples from LogPPT sampling"
 
-        for shot, samples in sample_candidates.items():
-            with open(f'{output_dir}/{dataset}/samples/lilac_{shot}.json', 'w') as f:
-                for sample in samples:
-                    f.write(json.dumps({'log': sample[0], 'template': sample[1]}) + '\n')
-
-        ## Adaptive Random Sampling from LogPPT ###
-        sample_candidates = logppt_sampling(raw_logs, labels, shots)
-        assert len(sample_candidates[32]) == 32, f"Expected 32 samples from logppt sampling, got {len(sample_candidates[32])}"
-
-        for shot, samples in sample_candidates.items():
-            with open(f'{output_dir}/{dataset}/samples/logppt_{shot}.json', 'w') as f:
-                for sample in samples:
-                    f.write(json.dumps({'log': sample[0], 'template': sample[1]}) + '\n')
+def test_model():
+    import torch
+    p_model = RobertaForLogParsing('roberta-base', ct_loss_weight=0.1)
+    p_model.tokenizer.add_tokens(['<*>'])
+    log = "mod_jk child init 1 -2"
+    template = "mod_jk child init <*> <*><*>"
+    batch = p_model.tokenizer([log], padding=True, truncation=True, return_tensors="pt")
+    label_tokens = p_model.tokenizer.tokenize(template)
+    label_tokens = ["<s>"] + [x for x in label_tokens if x != 'Ġ'] + ["</s>"]
+    label_ids = p_model.tokenizer.convert_tokens_to_ids(label_tokens)
+    batch['labels'] = torch.tensor(label_ids).unsqueeze(0)
+    p_model.train()
+    loss = p_model(batch)
+    assert loss is not None, "Expected a loss from the model"
+    loss.backward()
+    p_model.eval()
+    extracted_template = p_model.parse(log)
+    assert type(extracted_template) == str, "Expected a string template from the model"

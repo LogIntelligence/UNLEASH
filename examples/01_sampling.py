@@ -4,46 +4,15 @@
 import sys
 sys.path.append('..')
 
-import pandas as pd
 import json
 import os
 
-from unleash.data.utils import generate_logformat_regex, log_to_dataframe
+from unleash.data.utils import load_loghub_dataset
 from unleash.sampling.entropy_sampling import sampling as entropy_sampling
 from unleash.sampling.lilac_sampling import sampling as lilac_sampling
 from unleash.sampling.logppt_sampling import sampling as logppt_sampling
 
 from config import benchmark, datasets
-
-DOWNLOAD_URL = "https://zenodo.org/records/8275861/files/{}.zip"
-
-def load_loghub_dataset(dataset_name="Apache", cache_dir=None, format="csv", log_format=None):
-    """
-    Load from cache if available, otherwise download, unzip and cache the dataset
-    """
-    dataset_url = DOWNLOAD_URL.format(dataset_name)
-    print(dataset_url)
-    # Check if the dataset is already downloaded
-    if cache_dir is None:
-        cache_dir = os.path.join(os.path.expanduser("~"), ".cache", "unleash")
-    dataset_dir = os.path.join(cache_dir, dataset_name)
-    if not os.path.exists(dataset_dir):
-        os.makedirs(dataset_dir)
-        # Download the dataset
-        dataset_zip = os.path.join(cache_dir, f"{dataset_name}.zip")
-        os.system(f"wget {dataset_url} -O {dataset_zip}")
-        # Unzip the dataset
-        os.system(f"unzip {dataset_zip} -d {os.path.dirname(dataset_dir)}")
-        # Remove the zip file
-        os.remove(dataset_zip)
-    # Load the dataset
-    if format == "csv":
-        log_df = pd.read_csv(f"{dataset_dir}/{dataset_name}_full.log_structured.csv")
-    elif format == "text":
-        headers, regex = generate_logformat_regex(log_format)
-        log_df = log_to_dataframe(f"{dataset_dir}/{dataset_name}_full.log", regex, headers)
-    return log_df
-
 
 
 if __name__ == '__main__':

@@ -1,11 +1,11 @@
-from transformers import AutoTokenizer
-from datasets import load_dataset
 import re
-from typing import List, Any, Text, Dict, Tuple
-import pdb
 import torch
 from transformers import DataCollatorForTokenClassification
+import os
+import pandas as pd
 
+
+DOWNLOAD_URL = "https://zenodo.org/records/8275861/files/{}.zip"
 
 def generate_logformat_regex(logformat):
     """ 
@@ -21,7 +21,7 @@ def generate_logformat_regex(logformat):
     regex = ''
     for k in range(len(splitters)):
         if k % 2 == 0:
-            splitter = re.sub(' +', '\\\s+', splitters[k])
+            splitter = re.sub(r' +', r'\s+', splitters[k])
             regex += splitter
         else:
             header = splitters[k].strip('<').strip('>')
@@ -97,3 +97,30 @@ class CustomDataCollator(DataCollatorForTokenClassification):
         batch = {k: torch.tensor(v, dtype=torch.int64)
                  for k, v in batch.items()}
         return batch
+
+def load_loghub_dataset(dataset_name="Apache", cache_dir=None, format="csv", log_format=None):
+    """
+    Load from cache if available, otherwise download, unzip and cache the dataset
+    """
+    dataset_url = DOWNLOAD_URL.format(dataset_name)
+    print(dataset_url)
+    # Check if the dataset is already downloaded
+    if cache_dir is None:
+        cache_dir = os.path.join(os.path.expanduser("~"), ".cache", "unleash")
+    dataset_dir = os.path.join(cache_dir, dataset_name)
+    if not os.path.exists(dataset_dir):
+        os.makedirs(dataset_dir)
+        # Download the dataset
+        dataset_zip = os.path.join(cache_dir, f"{dataset_name}.zip")
+        os.system(f"wget {dataset_url} -O {dataset_zip}")
+        # Unzip the dataset
+        os.system(f"unzip {dataset_zip} -d {os.path.dirname(dataset_dir)}")
+        # Remove the zip file
+        os.remove(dataset_zip)
+    # Load the dataset
+    if format == "csv":
+        log_df = pd.read_csv(f"{dataset_dir}/{dataset_name}_full.log_structured.csv")
+    elif format == "text":
+        headers, regex = generate_logformat_regex(log_format)
+        log_df = log_to_dataframe(f"{dataset_dir}/{dataset_name}_full.log", regex, headers)
+    return log_df
