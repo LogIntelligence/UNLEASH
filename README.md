@@ -211,6 +211,31 @@ bash benchmark/RQ1.sh
 
 The parsing accuracy (`parsing_accuracy.csv`) and parsing time (`time_cost.json`) will be saved in the corresponding folders in the `../results` directory (e.g., `../results/iteration_01/logs`). 
 
+### Scalability and Generalization
+
+- Scalability: The scalability of UNLEASH is reflected in the parsing time and accuracy with different numbers of parsing processes. To run UNLEASH with different numbers of parsing processes, you can set the `parsing_num_processes` parameter in the `02_run_unleash.py` script and run [Step 2](#2-run-unleash-on-a-specific-dataset) again:
+```bash
+export num_processes=4
+
+python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path roberta-base --train_file ../datasets/loghub-2.0/$dataset/samples/entropy_32.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes $num_processes --output_dir ../results --max_train_steps 1000
+```
+
+- Generalization: The generalization of UNLEASH is reflected in the parsing accuracy on different pre-trained language models and numbers of training examples.
+
+    - To run UNLEASH with different pre-trained language models, you can set the `model_name_or_path` parameter in the `02_run_unleash.py` script and run [Step 2](#2-run-unleash-on-a-specific-dataset) again:
+
+```bash
+export model_name="roberta-base" # currently, we support roberta-base, microsoft/deberta-base, microsoft/codebert-base, and huggingface/CodeBERTa-small-v1
+python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path $model_name --train_file ../datasets/loghub-2.0/$dataset/samples/entropy_32.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes 1 --output_dir ../results --max_train_steps 1000
+```
+
+    - To run UNLEASH with different numbers of training examples, you can set the `train_file` parameter in the `02_run_unleash.py` script and run [Step 2](#2-run-unleash-on-a-specific-dataset) again:
+
+```bash
+export shot=64
+python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path roberta-base --train_file ../datasets/loghub-2.0/$dataset/samples/entropy_$shot.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes 1 --output_dir ../results --max_train_steps 1000
+```
+
 ## Download Paper
 
 The paper is available at [ICSE_25___Unleash.pdf](ICSE_25___Unleash.pdf).

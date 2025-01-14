@@ -46,7 +46,10 @@ if __name__ == "__main__":
     assert data_args.train_file is not None, "A training file is required"
 
     # Load model and tokenizer
-    p_model = RobertaForLogParsing(model_args.model_name_or_path, ct_loss_weight=0.1)
+    if model_args.model_name_or_path == "microsoft/deberta-base":
+        p_model = DebertaForLogParsing(model_args.model_name_or_path, ct_loss_weight=0.1)
+    else:
+        p_model = RobertaForLogParsing(model_args.model_name_or_path, ct_loss_weight=0.1)
     # p_model = DebertaForLogParsing(model_args.model_name_or_path, ct_loss_weight=0.1)
 
     # Load data
