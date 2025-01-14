@@ -12,9 +12,9 @@ __Table of Contents__
     - [Test the installation](#test-the-installation)
 - [To run the code](#to-run-the-code)
 - [Reproducibility](#reproducibility)
-    - [RQ1 - Parsing Efficaicy](#rq1---parsing-efficaicy)
-    - [RQ2 - Scalability and Generalization](#rq2---scalability-and-generalization)
-    - [RQ3-5 - The Impact of Enhancement Mechanisms](#rq3---the-impact-of-enhancement-mechanisms)
+    - [Parsing Performance](#parsing-performance)
+    - [Scalability and Generalization](#scalability-and-generalization)
+    - [The Impact of Enhancement Mechanisms](#the-impact-of-enhancement-mechanisms)
 
 - [Download Paper](#download-paper)
 - [Citation](#citation)
@@ -197,3 +197,33 @@ PTA: 0.8000, RTA: 0.8000 FTA: 0.8000
 Identify : 30, Groundtruth : 30
 Template-level accuracy calculation done. [Time taken: 0.010]
 ```
+</details>
+
+## Reproducibility
+
+### Parsing Performance
+
+To reproduce the parsing performance, you can run the following command:
+```bash
+cd examples
+bash benchmark/RQ1.sh
+```
+
+## Download Paper
+
+The paper is available at [ICSE_25___Unleash.pdf](ICSE_25___Unleash.pdf).
+
+## Citation
+
+```
+@inproceedings{le2025unleash,
+  title={Unleashing the True Potential of Semantic-based Log Parsing with Pre-trained Language Models},
+  author={Le, Van-Hoang and Xiao, Yi and Zhang, Hongyu},
+  booktitle={Proceedings of the 47th International Conference on Software Engineering},
+  year={2025}
+}
+```
+
+## Contact
+
+For any questions, please contact [Van-Hoang Le](mailto:levanhoang.psa@gmail.com) or [Yi Xiao](mailto:yixiao@cqu.edu.cn).
