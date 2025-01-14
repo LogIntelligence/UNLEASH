@@ -18,6 +18,10 @@ from config import benchmark, datasets
 if __name__ == '__main__':
 
     dname = sys.argv[1:]
+    if len(dname) == 0:
+        dname = None
+    else:
+        dname = dname[0]
     data_dir = "../datasets/loghub-2.0"
     output_dir = "../datasets/loghub-2.0"
     for dataset in datasets:
