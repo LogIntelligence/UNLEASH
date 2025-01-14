@@ -98,7 +98,7 @@ def template_extraction(model, devices, log_lines, vtoken="virtual-param"):
         logger.info(f"Total time taken: {time.time() - t0}")
         logger.info(f"Total time taken by model: {model_time}")
         logger.info(f"No of model invocations: {no_of_invocations}")
-        return templates, model_time
+        return templates, model_time, no_of_invocations
     
     
     model.eval()

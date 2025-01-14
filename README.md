@@ -108,6 +108,7 @@ The code is implemented in Python 3.9.
 We recommend using Python 3.9+ to run the code.
 ```bash
 sudo apt update
+sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt install python3.9 python3.9-venv python3.9-dev
 ```
 
@@ -143,41 +144,56 @@ pytest tests/test.py
 <Summary>Expected output</Summary>
 
 ```bash
-============================= test session starts ==============================
-platform linux -- Python 3.9.7, pytest-6.2.5, pluggy-1.0.0
-rootdir: /home/username/UNLEASH
-collected 1 item
+============================== test session starts ===============================
+platform linux -- Python 3.9.21, pytest-8.3.4, pluggy-1.5.0
+rootdir: /home/ubuntu/Documents/UNLEASH
+collected 3 items                                                                
 
-tests/test.py .                                                         [100%]
+tests/test.py ...                                                          [100%]
 
-============================== 1 passed in 0.01s ===============================
+=============================== 3 passed in 3.93s ================================
 ```
 </details>
 
 ## To run the code
-### Download the data
-Download the log datasets from [Loghub](https://zenodo.org/records/8275861) and extract them in the `datasets/loghub-2.0` folder.
+To perform log parsing on a specific dataset, you need to set the `dataset` parameter and set the working directory to the `examples` folder.
+```bash
+export dataset=Apache
+cd examples
+```
 
 ### 1. Run sampling for a specific dataset
-Set the `data_dir` variable in the `01_sampling.py` file to the path of the loghub-2.0 folder and the `output_dir` variable to the path where you want to save the sampled data.
-Then run the following command:
-
 ```bash
-cd examples
-python 01_sampling.py Apache
+python 01_sampling.py $dataset
 ```
 
 ### 2. Run UNLEASH on a specific dataset
 ```bash
-cd examples
-export dataset=Apache
 python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path roberta-base --train_file ../datasets/loghub-2.0/$dataset/samples/entropy_32.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes 1 --output_dir ../results --max_train_steps 1000
 ```
-Set `parsing_num_processes` to the number of CPU cores you want to use for parsing. The results will be saved in the `results` folder.
+Set `parsing_num_processes` to the number of CPU cores you want to use for parsing. The results will be saved in the `../results` folder.
 
 ### 3. Evaluate Unleash on a specific dataset
 ```bash
-cd examples
-export dataset=Apache
 python 03_evaluation.py --output_dir ../results --dataset $dataset
+```
+<details>
+<Summary>Expected output</Summary>
+
+```bash
+=== Evaluation on Apache ===
+../results/logs/Apache_full.log_structured.csv
+Start to align with null values
+100%|████████████████████████████████████████████████████| 51978/51978 [00:00<00:00, 220944.35it/s]
+100%|████████████████████████████████████████████████████| 51978/51978 [00:00<00:00, 220116.95it/s]
+Start compute grouping accuracy
+100%|████████████████████████████████████████████████████████████| 30/30 [00:00<00:00, 1057.17it/s]
+Grouping_Accuracy (GA): 1.0000, FGA: 1.0000,
+Grouping Accuracy calculation done. [Time taken: 0.039]
+Parsing_Accuracy (PA): 0.9953
+Parsing Accuracy calculation done. [Time taken: 0.002]
+100%|███████████████████████████████████████████████████████████| 30/30 [00:00<00:00, 14847.09it/s]
+PTA: 0.8000, RTA: 0.8000 FTA: 0.8000
+Identify : 30, Groundtruth : 30
+Template-level accuracy calculation done. [Time taken: 0.010]
 ```
