@@ -52,16 +52,16 @@ if __name__ == '__main__':
                 for sample in samples:
                     f.write(json.dumps({'log': sample[0], 'template': sample[1]}) + '\n')
 
-        ## Hierichical Sampling from LILAC ###
-        sample_candidates = lilac_sampling(raw_logs, labels, shots)
-        for shot, samples in sample_candidates.items():
-            with open(f'{output_dir}/{dataset}/samples/lilac_{shot}.json', 'w') as f:
-                for sample in samples:
-                    f.write(json.dumps({'log': sample[0], 'template': sample[1]}) + '\n')
+        # ## Hierichical Sampling from LILAC ###
+        # sample_candidates = lilac_sampling(raw_logs, labels, shots)
+        # for shot, samples in sample_candidates.items():
+        #     with open(f'{output_dir}/{dataset}/samples/lilac_{shot}.json', 'w') as f:
+        #         for sample in samples:
+        #             f.write(json.dumps({'log': sample[0], 'template': sample[1]}) + '\n')
 
-        ## Adaptive Random Sampling from LogPPT ###
-        sample_candidates = logppt_sampling(raw_logs, labels, shots)
-        for shot, samples in sample_candidates.items():
-            with open(f'{output_dir}/{dataset}/samples/logppt_{shot}.json', 'w') as f:
-                for sample in samples:
-                    f.write(json.dumps({'log': sample[0], 'template': sample[1]}) + '\n')
+        # ## Adaptive Random Sampling from LogPPT ###
+        # sample_candidates = logppt_sampling(raw_logs, labels, shots)
+        # for shot, samples in sample_candidates.items():
+        #     with open(f'{output_dir}/{dataset}/samples/logppt_{shot}.json', 'w') as f:
+        #         for sample in samples:
+        #             f.write(json.dumps({'log': sample[0], 'template': sample[1]}) + '\n')
