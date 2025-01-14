@@ -85,15 +85,6 @@ def is_abstract(x, y):
 
 def common_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-otc', '--oracle_template_correction',
-                        help="Set this if you want to use corrected oracle templates",
-                        default=False, action='store_true')
-    parser.add_argument('--complex', type=int,
-                        help="Set this if you want to test on complex dataset",
-                        default=0)
-    parser.add_argument('--frequent', type=int,
-                        help="Set this if you want to test on frequent dataset",
-                        default=0)
     parser.add_argument('--example_size', type=int,
                         default=0)
     parser.add_argument('--data_type', type=str,

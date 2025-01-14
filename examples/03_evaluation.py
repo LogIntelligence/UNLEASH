@@ -57,12 +57,7 @@ if __name__ == "__main__":
         raise NotImplementedError
 
     # prepare results file
-    result_file = prepare_results(
-        output_dir=output_dir,
-        otc=args.oracle_template_correction,
-        complex=args.complex,
-        frequent=args.frequent
-    )
+    result_file = prepare_results(output_dir=output_dir)
     if args.dataset != "null":
         datasets = [args.dataset]
 
@@ -79,9 +74,6 @@ if __name__ == "__main__":
             input_dir=input_dir,
             output_dir=output_dir,
             log_file=log_file,
-            otc=args.oracle_template_correction,
-            complex=args.complex,
-            frequent=args.frequent,
             result_file=result_file,
         )  # it internally saves the results into a summary file
     metric_file = os.path.join(output_dir, result_file)

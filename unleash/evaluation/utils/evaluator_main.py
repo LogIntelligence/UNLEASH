@@ -109,9 +109,6 @@ def evaluator(
         input_dir,
         output_dir,
         log_file,
-        otc,
-        complex,
-        frequent,
         result_file,
         lstm=False
 ):
@@ -123,11 +120,7 @@ def evaluator(
     print('\n=== Evaluation on %s ===' % dataset)
     indir = os.path.join(input_dir, os.path.dirname(log_file))
     log_file_basename = os.path.basename(log_file)
-    if otc:
-        # use a structured log file with corrected oracle templates
-        groundtruth = os.path.join(indir, log_file_basename + '_structured_corrected.csv')
-    else:
-        groundtruth = os.path.join(indir, log_file_basename + '_structured.csv')
+    groundtruth = os.path.join(indir, log_file_basename + '_structured.csv')
 
     parsedresult = os.path.join(output_dir, log_file_basename + '_structured.csv')
 
