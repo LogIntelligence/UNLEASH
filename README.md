@@ -324,7 +324,10 @@ UNLEASH provides various settings to customize the parsing process. You can set 
     - `max_train_steps`: The maximum number of training steps.
     - `save_model`: Whether to save the trained model.
     - `parsing_num_processes`: The number of parsing processes to use for parsing.
-
+- To view all available parameters, you can run:
+```bash
+python 02_run_unleash.py --help
+```
 
 
 ## Download Paper
