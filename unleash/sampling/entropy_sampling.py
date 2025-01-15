@@ -10,6 +10,7 @@ import pandas as pd
 from copy import deepcopy
 from . import datasets, benchmark
 
+
 def entropy(s):
     if isinstance(s, int):
         s = str(s)
@@ -17,12 +18,15 @@ def entropy(s):
     entropy = - sum([p * math.log(p) / math.log(2.0) for p in prob]) / len(s)
     return entropy
 
+
 def first_token(s):
     return s.split()[0] if s and " " in s else s
 
+
 def entropy_sampling(logs, k=10, n_layers=5):
     # print(logs)
-    entropy_and_token = [(idx, entropy(item), first_token(item)) for idx, item in enumerate(logs)]
+    entropy_and_token = [(idx, entropy(item), first_token(item))
+                         for idx, item in enumerate(logs)]
     # print(entropy_and_token)
     entropy_and_token.sort(key=lambda x: x[1], reverse=True)
     layers = np.array_split(entropy_and_token, n_layers)
@@ -41,9 +45,10 @@ def entropy_sampling(logs, k=10, n_layers=5):
                 break
         if len(selected_samples) >= k:
             break
-        
+
     ret = [int(idx) for idx in selected_samples]
     return ret, len(selected_samples)
+
 
 class Vocab:
     def __init__(self, stopwords=["<*>"]):
@@ -61,13 +66,13 @@ class Vocab:
           + list(calendar.month_name) + list(calendar.month_abbr)
         self.token_counter = Counter()
         self.stopwords = frozenset(set(stopwords))
-        #print(self.__filter_stopwords(['LDAP', 'Built', 'with']))
+        # print(self.__filter_stopwords(['LDAP', 'Built', 'with']))
 
     def build(self, sequences):
         print("Build vocab with examples: ", len(sequences))
         for sequence in sequences:
             sequence = self.__filter_stopwords(sequence)
-            #print(sequence)
+            # print(sequence)
             self.update(sequence)
 
     def update(self, sequence):
@@ -76,7 +81,8 @@ class Vocab:
 
     def topk_tokens(self, sequence, topk=3):
         sequence = self.__filter_stopwords(sequence)
-        token_count = [(token, self.token_counter[token]) for token in set(sequence)]
+        token_count = [(token, self.token_counter[token])
+                       for token in set(sequence)]
         topk_tuples = heapq.nlargest(topk, token_count, key=lambda x: x[1])
         topk_keys = tuple([t[0] for t in topk_tuples])
         return topk_keys
@@ -98,32 +104,34 @@ def clean(s):
     unique_chars = list(set(log_format))
     sorted_string = ''.join(sorted(unique_chars))
     s = re.sub('\+|\_|\#|:|\(|\)|=|,|"|\{|\}|@|$|\[|\]|\||;|\.?!', ' ', s)
-    s = " ".join([word for word in s.strip().split() if not bool(re.search(r'\d', word))])
+    s = " ".join([word for word in s.strip().split()
+                 if not bool(re.search(r'\d', word))])
     # trantab = str.maketrans(dict.fromkeys(list(string.punctuation)))
     return s, sorted_string
 
 
 def hierarchical_clustering(contents):
-    t1 = time.time()
     vocab = Vocab()
     vocab.build([v[0].split() for v in contents.values()])
-    t2 = time.time()
-    # print("Build time: ", t2 - t1)
 
     # hierarchical clustering
     hierarchical_clusters = {}
     for k, v in contents.items():
-        frequent_token = tuple(sorted(vocab.topk_tokens(v[0].split(), 3))) 
+        frequent_token = tuple(sorted(vocab.topk_tokens(v[0].split(), 3)))
         log_format = v[1]
         if frequent_token not in hierarchical_clusters:
-            hierarchical_clusters[frequent_token] = {"size": 1, "cluster": {log_format: [k]}}
+            hierarchical_clusters[frequent_token] = {
+                "size": 1, "cluster": {log_format: [k]}}
         else:
             hierarchical_clusters[frequent_token]["size"] = hierarchical_clusters[frequent_token]["size"] + 1
             if log_format not in hierarchical_clusters[frequent_token]["cluster"]:
-                hierarchical_clusters[frequent_token]["cluster"][log_format] = [k]
+                hierarchical_clusters[frequent_token]["cluster"][log_format] = [
+                    k]
             else:
-                hierarchical_clusters[frequent_token]["cluster"][log_format].append(k)
-    print("Number of coarse-grained clusters: ", len(hierarchical_clusters.keys()))
+                hierarchical_clusters[frequent_token]["cluster"][log_format].append(
+                    k)
+    print("Number of coarse-grained clusters: ",
+          len(hierarchical_clusters.keys()))
     total_fine_clusters = 0
     for k, v in hierarchical_clusters.items():
         total_fine_clusters += len(hierarchical_clusters[k]["cluster"])
@@ -136,7 +144,8 @@ def hierarchical_distribute(hierarchical_clusters, shot, logs=[]):
     candidate_samples = []
     coarse_clusters = hierarchical_clusters.keys()
     # coarse_clusters = shuffle(list(coarse_clusters))
-    coarse_clusters = sorted(coarse_clusters, key=lambda x: hierarchical_clusters[x]["size"], reverse=True)
+    coarse_clusters = sorted(
+        coarse_clusters, key=lambda x: hierarchical_clusters[x]["size"], reverse=True)
     corase_size = len(coarse_clusters)
     empty_clusters = []
     print("Shot: ", shot, "Coarse size: ", corase_size)
@@ -146,17 +155,21 @@ def hierarchical_distribute(hierarchical_clusters, shot, logs=[]):
         for coarse_id, coarse_key in enumerate(coarse_clusters):
             if coarse_key in empty_clusters:
                 continue
-            coarse_quota = max(int(shot // corase_size), 1)# + (coarse_id < shot % corase_size)
+            # + (coarse_id < shot % corase_size)
+            coarse_quota = max(int(shot // corase_size), 1)
             if coarse_quota == 0:
                 break
-            
+
             fine_clusters = hierarchical_clusters[coarse_key]["cluster"].keys()
-            fine_clusters = sorted(fine_clusters, key=lambda x: len(hierarchical_clusters[coarse_key]["cluster"][x]), reverse=True)
+            fine_clusters = sorted(fine_clusters, key=lambda x: len(
+                hierarchical_clusters[coarse_key]["cluster"][x]), reverse=True)
             fine_size = len(fine_clusters)
             cluster_size = 0
             for fine_id, fine_key in enumerate(fine_clusters):
-                fine_quota = min(shot, int(coarse_quota // fine_size) + (fine_id < coarse_quota % fine_size))
-                fine_quota = min(fine_quota, len(hierarchical_clusters[coarse_key]["cluster"][fine_key]))
+                fine_quota = min(
+                    shot, int(coarse_quota // fine_size) + (fine_id < coarse_quota % fine_size))
+                fine_quota = min(fine_quota, len(
+                    hierarchical_clusters[coarse_key]["cluster"][fine_key]))
                 if fine_quota == 0:
                     continue
                 # empty_cluster = False
@@ -164,7 +177,8 @@ def hierarchical_distribute(hierarchical_clusters, shot, logs=[]):
                 cluster_logs = [logs[i] for i in cluster_ids]
                 # print(fine_quota, len(cluster_logs))
                 # while fine_quota > 0 and len(cluster_logs) > 0:
-                samples_ids, num_samples = entropy_sampling(cluster_logs, fine_quota)
+                samples_ids, num_samples = entropy_sampling(
+                    cluster_logs, fine_quota)
                 samples = [cluster_ids[i] for i in samples_ids]
                 candidate_samples.extend(samples)
                 fine_quota -= num_samples
@@ -172,13 +186,15 @@ def hierarchical_distribute(hierarchical_clusters, shot, logs=[]):
                 for i in sorted(samples_ids, reverse=True):
                     cluster_ids.pop(i)
                     cluster_logs.pop(i)
-                cluster_size += len(hierarchical_clusters[coarse_key]["cluster"][fine_key])
+                cluster_size += len(
+                    hierarchical_clusters[coarse_key]["cluster"][fine_key])
             # print(coarse_key, cluster_size, shot)
             if cluster_size == 0:
                 empty_clusters.append(coarse_key)
                 corase_size -= 1
 
     return candidate_samples
+
 
 def sampling(logs, labels=None, shots=[8]):
     # only keep unique logs with the corresponding labels
@@ -197,7 +213,8 @@ def sampling(logs, labels=None, shots=[8]):
     sample_candidates = {}
     for idx, shot in enumerate(shots):
         begin_time = time.time()
-        sampled_ids = hierarchical_distribute(deepcopy(hierarchical_clusters), shot, logs)
+        sampled_ids = hierarchical_distribute(
+            deepcopy(hierarchical_clusters), shot, logs)
         if labels is not None:
             samples = [(logs[i], labels[i]) for i in sampled_ids]
         else:
@@ -215,7 +232,8 @@ if __name__ == '__main__':
         print(dataset)
         log_file = benchmark[dataset]['log_file']
         print(data_dir, log_file)
-        labelled_logs = pd.read_csv(f'{data_dir}/{log_file}_structured_corrected.csv')
+        labelled_logs = pd.read_csv(
+            f'{data_dir}/{log_file}_structured_corrected.csv')
         k_rate = 0.2
         length = int(k_rate * len(labelled_logs))
         labelled_logs = labelled_logs[:length]
@@ -226,4 +244,5 @@ if __name__ == '__main__':
         for shot, samples in sample_candidates.items():
             with open(f'{data_dir}/{dataset}/sampled_{shot}_v2.json', 'w') as f:
                 for sample in samples:
-                    f.write(json.dumps({'log': sample[0], 'template': sample[1]}) + '\n')
+                    f.write(json.dumps(
+                        {'log': sample[0], 'template': sample[1]}) + '\n')
