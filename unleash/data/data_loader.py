@@ -6,7 +6,8 @@ from torch.utils.data import DataLoader
 from unleash.data.utils import CustomDataCollator
 
 filter_list = ["and", "or", "the", "a", "of", "to", "at"]
-delimiters = "([ |\(|\)|\[|\]|\{|\})])"
+delimiters = r"([ |\(|\)|\[|\]|\{|\})])"
+
 
 def align_with_null_values(log, template):
     """
@@ -16,10 +17,10 @@ def align_with_null_values(log, template):
     pattern_parts = template.split("<*>")
     pattern_parts_escaped = [re.escape(part) for part in pattern_parts]
     regex_pattern = "(.*?)".join(pattern_parts_escaped)
-    regex = "^" + regex_pattern + "$"  
+    regex = "^" + regex_pattern + "$"
     matches = re.search(regex, log)
 
-    if matches == None:
+    if matches is None:
         return template
 
     parts = []
@@ -43,7 +44,7 @@ def get_template_regex(template):
         return None
     template_regex = re.sub(r'([^A-Za-z0-9])', r'\\\1', template)
     template_regex = re.sub(r'\\ +', r'\\s+', template_regex)
-    template_regex = "^" + template_regex.replace("\<\*\>", "(.*?)") + "$"
+    template_regex = "^" + template_regex.replace(r"\<\*\>", "(.*?)") + "$"
     return template_regex
 
 
@@ -177,7 +178,8 @@ class DataLoaderForPromptTuning(BaseDataLoader):
                     for idx in range(match.lastindex):
                         start, end = match.span(idx + 1)
                         if start > cur_position:
-                            input_tokens.append(log[cur_position:start].rstrip())
+                            input_tokens.append(
+                                log[cur_position:start].rstrip())
                             label_tokens.append("o")
                         input_tokens.append(log[start:end])
                         if start > 0 and log[start - 1] == " ":
@@ -186,7 +188,8 @@ class DataLoaderForPromptTuning(BaseDataLoader):
                         cur_position = end
                     # return input_tokens, label_tokens
                     if cur_position < len(log):
-                        input_tokens.append(log[cur_position:len(log)].rstrip())
+                        input_tokens.append(
+                            log[cur_position:len(log)].rstrip())
                         label_tokens.append('o')
                 # print(input_tokens)
                 # print(label_tokens)
@@ -224,14 +227,16 @@ class DataLoaderForPromptTuning(BaseDataLoader):
                         target_token.extend(token_ids)
                         keywords.extend(token_ids)
                     else:
-                        target_token.extend([self.label_token_to_id[label_token]] * len(token_ids))
+                        target_token.extend(
+                            [self.label_token_to_id[label_token]] * len(token_ids))
                         label_words.extend(token_ids)
                         # print(input_token)
                     labels.extend([self.label_to_id[label_token]]
                                   * len(token_ids))
                 input_id = [self.tokenizer.cls_token_id] + \
                     input_id + [self.tokenizer.sep_token_id]
-                target_token = [self.tokenizer.bos_token_id] + target_token + [self.tokenizer.eos_token_id]
+                target_token = [self.tokenizer.bos_token_id] + \
+                    target_token + [self.tokenizer.eos_token_id]
                 labels = [-100] + labels + [-100]
                 attention_mask = [1] * len(input_id)
                 input_ids.append(input_id)
@@ -287,4 +292,3 @@ class DataLoaderForPromptTuning(BaseDataLoader):
             )
         else:
             self.val_loader = None
-

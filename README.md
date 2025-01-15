@@ -136,6 +136,7 @@ pip install -e .
 
 ### Test the installation
 ```bash
+pip install pytest
 pytest tests/test.py
 ```
 

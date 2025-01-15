@@ -8,9 +8,8 @@ from transformers import get_scheduler
 from typing import Any, Optional
 
 
-
-# filter_list = ["and", "or", "the", "a", "of", "to", "at"]
 logger = logging.getLogger("unleash")
+
 
 class TrainingArguments:
     def __init__(
@@ -71,22 +70,25 @@ class Trainer:
         self.no_train_samples = no_train_samples
         self.device = device
         self.initialize()
-    
+
     def initialize(self):
         if self.args.max_train_steps > 0:
             if self.args.per_device_train_batch_size > self.no_train_samples:
                 self.args.gradient_accumulation_steps = self.args.per_device_train_batch_size // self.no_train_samples
                 self.args.per_device_train_batch_size = self.no_train_samples
-                self.args.num_train_epochs = self.args.max_train_steps * self.args.gradient_accumulation_steps
+                self.args.num_train_epochs = self.args.max_train_steps * \
+                    self.args.gradient_accumulation_steps
             else:
                 self.args.num_train_epochs = math.ceil(
                     self.args.max_train_steps /
-                    (self.no_train_samples // (self.args.per_device_train_batch_size * self.args.gradient_accumulation_steps))
+                    (self.no_train_samples // (self.args.per_device_train_batch_size *
+                     self.args.gradient_accumulation_steps))
                 )
             self.args.num_warmup_steps = self.args.max_train_steps // 10
         else:
             self.args.max_train_steps = self.args.num_train_epochs * \
-                (self.no_train_samples // (self.args.per_device_train_batch_size * self.args.gradient_accumulation_steps))
+                (self.no_train_samples // (self.args.per_device_train_batch_size *
+                 self.args.gradient_accumulation_steps))
             self.args.num_warmup_steps = self.args.max_train_steps // 10
         self.args.evaluation_strategy = "steps"
         self.args.eval_steps = 500
@@ -124,10 +126,10 @@ class Trainer:
         )
 
         logger.info("Initialized Trainer")
-        
 
     def train(self):
-        total_batch_size = self.args.per_device_train_batch_size * self.args.gradient_accumulation_steps
+        total_batch_size = self.args.per_device_train_batch_size * \
+            self.args.gradient_accumulation_steps
 
         logger.info("***** Running training *****")
         logger.info(f"  Num examples = {self.no_train_samples}")
@@ -170,7 +172,7 @@ class Trainer:
                     progress_bar.update(1)
                     progress_bar.set_description(f"Loss: {float(loss)}")
                     completed_steps += 1
-                
+
                 if completed_steps >= self.args.max_train_steps:
                     break
 

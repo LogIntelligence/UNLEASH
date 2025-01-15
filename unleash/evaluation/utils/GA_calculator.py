@@ -4,13 +4,7 @@ Author      : LogPAI team
 License     : MIT
 """
 
-import sys
 import pandas as pd
-from collections import defaultdict
-try:
-    from scipy.misc import comb
-except ImportError as e:
-    from scipy.special import comb
 from tqdm import tqdm
 
 
