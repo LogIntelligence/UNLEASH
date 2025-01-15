@@ -14,8 +14,7 @@ __Table of Contents__
 - [Reproducibility](#reproducibility)
     - [Parsing Performance](#parsing-performance)
     - [Scalability and Generalization](#scalability-and-generalization)
-    - [The Impact of Enhancement Mechanisms](#the-impact-of-enhancement-mechanisms)
-
+    - [Other Settings](#other-settings)
 - [Download Paper](#download-paper)
 - [Citation](#citation)
 - [Contact](#contact)
@@ -164,12 +163,12 @@ cd examples
 
 ### 1. Run sampling for a specific dataset
 ```bash
-python 01_sampling.py $dataset
+python 01_sampling.py --dataset $dataset --sampling_method unleash
 ```
 
 ### 2. Run UNLEASH on a specific dataset
 ```bash
-python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path roberta-base --train_file ../datasets/loghub-2.0/$dataset/samples/entropy_32.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes 1 --output_dir ../results --max_train_steps 1000
+python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path roberta-base --train_file ../datasets/loghub-2.0/$dataset/samples/unleash_32.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes 1 --output_dir ../results --max_train_steps 1000
 ```
 Set `parsing_num_processes` to the number of CPU cores you want to use for parsing. The results will be saved in the `../results` folder.
 
@@ -206,7 +205,7 @@ Template-level accuracy calculation done. [Time taken: 0.010]
 To reproduce the parsing performance, you can run the following command:
 ```bash
 cd examples
-bash benchmark/RQ1.sh
+bash benchmark.sh
 ```
 
 The parsing accuracy (`parsing_accuracy.csv`) and parsing time (`time_cost.json`) will be saved in the corresponding folders in the `../results` directory (e.g., `../results/iteration_01/logs`). 
@@ -217,24 +216,38 @@ The parsing accuracy (`parsing_accuracy.csv`) and parsing time (`time_cost.json`
 ```bash
 export num_processes=4
 
-python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path roberta-base --train_file ../datasets/loghub-2.0/$dataset/samples/entropy_32.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes $num_processes --output_dir ../results --max_train_steps 1000
+python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path roberta-base --train_file ../datasets/loghub-2.0/$dataset/samples/unleash_32.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes $num_processes --output_dir ../results --max_train_steps 1000
 ```
 
 - Generalization: The generalization of UNLEASH is reflected in the parsing accuracy on different pre-trained language models and numbers of training examples.
 
     - To run UNLEASH with different pre-trained language models, you can set the `model_name_or_path` parameter in the `02_run_unleash.py` script and run [Step 2](#2-run-unleash-on-a-specific-dataset) again:
 
-```bash
-export model_name="roberta-base" # currently, we support roberta-base, microsoft/deberta-base, microsoft/codebert-base, and huggingface/CodeBERTa-small-v1
-python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path $model_name --train_file ../datasets/loghub-2.0/$dataset/samples/entropy_32.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes 1 --output_dir ../results --max_train_steps 1000
-```
+    ```bash
+    export model_name="roberta-base" # currently, we support roberta-base, microsoft/deberta-base, microsoft/codebert-base, and huggingface/CodeBERTa-small-v1
+    python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path $model_name --train_file ../datasets/loghub-2.0/$dataset/samples/unleash_32.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes 1 --output_dir ../results --max_train_steps 1000
+    ```
 
     - To run UNLEASH with different numbers of training examples, you can set the `train_file` parameter in the `02_run_unleash.py` script and run [Step 2](#2-run-unleash-on-a-specific-dataset) again:
 
-```bash
-export shot=64
-python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path roberta-base --train_file ../datasets/loghub-2.0/$dataset/samples/entropy_$shot.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes 1 --output_dir ../results --max_train_steps 1000
-```
+    ```bash
+    export shot=64 # can be [32, 64, 128, 256]
+    python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path roberta-base --train_file ../datasets/loghub-2.0/$dataset/samples/unleash_$shot.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes 1 --output_dir ../results --max_train_steps 1000
+    ```
+
+### Other Settings
+
+UNLEASH provides various settings to customize the parsing process. You can set the following **main parameters**:
+- For sampling (Step 1 - `01_sampling.py`):
+    - `sampling_method`: The sampling method to use for selecting training examples. Currently, we support `unleash`, `lilac`, and `logppt`. To sample using all methods, set `sampling_method` to `all`.
+- For parsing (Step 2 - `02_run_unleash.py`):
+    - `model_name_or_path`: The pre-trained language model to use for parsing. Currently, we support `roberta-base`, `microsoft/deberta-base`, `microsoft/codebert-base`, and `huggingface/CodeBERTa-small-v1`.
+    - `train_file`: The path to the training examples.
+    - `max_train_steps`: The maximum number of training steps.
+    - `save_model`: Whether to save the trained model.
+    - `parsing_num_processes`: The number of parsing processes to use for parsing.
+
+
 
 ## Download Paper
 
@@ -253,4 +266,4 @@ The paper is available at [ICSE_25___Unleash.pdf](ICSE_25___Unleash.pdf).
 
 ## Contact
 
-For any questions, please contact [Van-Hoang Le](mailto:levanhoang.psa@gmail.com) or [Yi Xiao](mailto:yixiao@cqu.edu.cn).
+For any questions, please contact [Van-Hoang Le](mailto:levanhoang.psa@gmail.com).
