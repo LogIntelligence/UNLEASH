@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "icse-unleash"
+description = "UNLEASH: SOTA Semantic-based Log Parser with Pre-trained Language Models"
+authors = [{name = "Hoang Le", email = "levanhoang.psa@gmail.com"}]
+license = {file = "LICENSE"}
+dynamic = ["version", "dependencies"]
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.urls]
+homepage = "https://github.com/LogIntelligence/UNLEASH"
+issues = "https://github.com/LogIntelligence/UNLEASH/issues"
+
+[tool.setuptools.dynamic]
+version = {attr = "unleash.__version__"}
+dependencies = {file = ["requirements.txt"]}
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.package-dir]
+unleash = "unleash"
+
+[tool.setuptools.packages.find]
+namespaces = false
+
+[tool.setuptools_scm]
+version_scheme = "no-guess-dev"
+
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
