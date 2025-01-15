@@ -136,7 +136,6 @@ pip install -e .
 
 ### Test the installation
 ```bash
-pip install pytest
 pytest tests/test.py
 ```
 
@@ -167,11 +166,89 @@ cd examples
 python 01_sampling.py --dataset $dataset --sampling_method unleash
 ```
 
+<details>
+<Summary>Expected output</Summary>
+
+```bash
+Apache
+Loading Apache/Apache_full.log...
+https://zenodo.org/records/8275861/files/Apache.zip
+--2025-01-15 10:06:19--  https://zenodo.org/records/8275861/files/Apache.zip
+Resolving zenodo.org (zenodo.org)... 188.185.45.92, 188.185.48.194, 188.185.43.25, ...
+Connecting to zenodo.org (zenodo.org)|188.185.45.92|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 578629 (565K) [application/octet-stream]
+Saving to: ‘../datasets/loghub-2.0/Apache.zip’
+
+../datasets/loghub-2.0/Apache 100%[==============================================>] 565.07K   276KB/s    in 2.0s    
+
+2025-01-15 10:06:22 (276 KB/s) - ‘../datasets/loghub-2.0/Apache.zip’ saved [578629/578629]
+
+Archive:  ../datasets/loghub-2.0/Apache.zip
+  inflating: ../datasets/loghub-2.0/Apache/Apache_full.log  
+  inflating: ../datasets/loghub-2.0/Apache/Apache_full.log_structured.csv  
+  inflating: ../datasets/loghub-2.0/Apache/Apache_full.log_templates.csv  
+Loaded 51978 logs.
+Build vocab with examples:  4125
+Number of coarse-grained clusters:  25
+Number of fine-grained clusters:  31
+hierarchical clustering time:  0.018030643463134766
+Shot:  8 Coarse size:  25
+8-shot sampling time:  0.03555607795715332
+Shot:  16 Coarse size:  25
+16-shot sampling time:  0.027220964431762695
+Shot:  32 Coarse size:  25
+32-shot sampling time:  0.053362369537353516
+Shot:  64 Coarse size:  25
+64-shot sampling time:  0.13954639434814453
+Shot:  128 Coarse size:  25
+128-shot sampling time:  0.2863941192626953
+Shot:  256 Coarse size:  25
+256-shot sampling time:  0.6433525085449219
+```
+</details>
+
+
 ### 2. Run UNLEASH on a specific dataset
 ```bash
 python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path roberta-base --train_file ../datasets/loghub-2.0/$dataset/samples/unleash_32.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes 1 --output_dir ../results --max_train_steps 1000
 ```
-Set `parsing_num_processes` to the number of CPU cores you want to use for parsing. The results will be saved in the `../results` folder.
+
+<details>
+<Summary>Expected output</Summary>
+
+```bash
+Generating train split: 32 examples [00:00, 28220.72 examples/s]
+Generating validation split: 10395 examples [00:00, 4274908.33 examples/s]
+2025-01-15 10:07:14,564 | unleash | DEBUG | Apache loaded with 32 train samples
+2025-01-15 10:07:14,564 | unleash | DEBUG | Text column name: log - Label column name: template
+Running tokenizer on train dataset: 100%|███████████████████████████████████| 32/32 [00:00<00:00, 2985.34 examples/s]
+Running tokenizer on test dataset (num_proc=4): 100%|████████████████| 10395/10395 [00:00<00:00, 20829.57 examples/s]
+2025-01-15 10:07:15,135 | unleash | DEBUG | {'train': Dataset({
+    features: ['input_ids', 'labels', 'ori_labels', 'attention_mask'],
+    num_rows: 32
+}), 'validation': Dataset({
+    features: ['input_ids', 'labels', 'ori_labels', 'attention_mask'],
+    num_rows: 10395
+})}
+2025-01-15 10:07:15,135 | unleash | DEBUG | Train dataloader: <torch.utils.data.dataloader.DataLoader object at 0x7907fc1e2790>
+2025-01-15 10:07:15,135 | unleash | DEBUG | Validation dataloader: <torch.utils.data.dataloader.DataLoader object at 0x7907fc1e2550>
+2025-01-15 10:07:15,136 | unleash | INFO | Initialized Trainer
+2025-01-15 10:07:15,136 | unleash | INFO | ***** Running training *****
+2025-01-15 10:07:15,136 | unleash | INFO |   Num examples = 32
+2025-01-15 10:07:15,136 | unleash | INFO |   Num Epochs = 500
+2025-01-15 10:07:15,136 | unleash | INFO |   Instantaneous batch size per device = 16
+2025-01-15 10:07:15,136 | unleash | INFO |   Total train batch size (w. parallel, distributed & accumulation) = 16
+2025-01-15 10:07:15,136 | unleash | INFO |   Gradient Accumulation steps = 1
+2025-01-15 10:07:15,136 | unleash | INFO |   Total optimization steps = 1000
+Loss: 0.004792781546711922: 100%|████████████████████████████████████████████████| 1000/1000 [01:05<00:00, 15.16it/s]
+2025-01-15 10:08:21,103 | unleash | INFO | Starting template extraction
+Parsing:  96%|███████████████████████████████████████████████████████████▍  | 49831/51978 [00:00<00:00, 62515.14it/s]2025-01-15 10:08:21,939 | unleash | INFO | Total time taken: 0.20595479011535645
+2025-01-15 10:08:21,939 | unleash | INFO | No of model invocations: 29
+2025-01-15 10:08:21,939 | unleash | INFO | Total time taken by model: 0.11258220672607422
+Parsing: 100%|██████████████████████████████████████████████████████████████| 51978/51978 [00:00<00:00, 62204.15it/s]
+```
+</details>
 
 ### 3. Evaluate Unleash on a specific dataset
 ```bash
