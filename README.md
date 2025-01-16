@@ -1,6 +1,6 @@
-# UNLEASH: SOTA Semantic-based Log Parser with Pre-trained Language Models
+# UNLEASH: Semantic-based Log Parser with Pre-trained Language Models
 
-__UNLEASH__ is and end-to-end semantic-based log parsing framework. This repository includes artifacts for reuse and reproduction of experimental results presented in our ICSE'25 paper titled _"Unleashing the True Potential of Semantic-based Log Parsing with Pre-trained Language Models"_.
+__UNLEASH__ is a semantic-based log parsing framework. This repository includes artifacts for reuse and reproduction of experimental results presented in our ICSE'25 paper titled _"Unleashing the True Potential of Semantic-based Log Parsing with Pre-trained Language Models"_.
 
 __Table of Contents__
 - [Repository Structure](#repository-structure)
@@ -243,10 +243,10 @@ Running tokenizer on test dataset (num_proc=4): 100%|█████████
 2025-01-15 10:07:15,136 | unleash | INFO |   Total optimization steps = 1000
 Loss: 0.004792781546711922: 100%|████████████████████████████████████████████████| 1000/1000 [01:05<00:00, 15.16it/s]
 2025-01-15 10:08:21,103 | unleash | INFO | Starting template extraction
-Parsing:  96%|███████████████████████████████████████████████████████████▍  | 49831/51978 [00:00<00:00, 62515.14it/s]2025-01-15 10:08:21,939 | unleash | INFO | Total time taken: 0.20595479011535645
+Parsing: 100%|██████████████████████████████████████████████████████████████| 51978/51978 [00:00<00:00, 62204.15it/s]
+2025-01-15 10:08:21,939 | unleash | INFO | Total time taken: 0.20595479011535645
 2025-01-15 10:08:21,939 | unleash | INFO | No of model invocations: 29
 2025-01-15 10:08:21,939 | unleash | INFO | Total time taken by model: 0.11258220672607422
-Parsing: 100%|██████████████████████████████████████████████████████████████| 51978/51978 [00:00<00:00, 62204.15it/s]
 ```
 </details>
 
