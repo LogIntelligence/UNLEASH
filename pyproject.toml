@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "icse-unleash"
-description = "UNLEASH: SOTA Semantic-based Log Parser with Pre-trained Language Models"
+description = "UNLEASH: Semantic-based Log Parser with Pre-trained Language Models"
 authors = [{name = "Hoang Le", email = "levanhoang.psa@gmail.com"}]
 license = {file = "LICENSE"}
 dynamic = ["version", "dependencies"]

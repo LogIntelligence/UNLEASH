@@ -332,7 +332,7 @@ python 02_run_unleash.py --help
 
 ## Download Paper
 
-The paper is available at [ICSE_25___Unleash.pdf](ICSE_25___Unleash.pdf).
+The paper is available at [ICSE_25___Unleash.pdf](https://github.com/LogIntelligence/UNLEASH/blob/master/docs/paper/ICSE_25___Unleash.pdf).
 
 ## Citation
 
