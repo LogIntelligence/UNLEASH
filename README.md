@@ -1,4 +1,8 @@
 # UNLEASH: Semantic-based Log Parser with Pre-trained Language Models
+[![pypi package](https://img.shields.io/pypi/v/icse-unleash.svg)](https://pypi.org/project/icse-unleash/)
+[![Build and test](https://github.com/LogIntelligence/UNLEASH/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/LogIntelligence/UNLEASH/actions/workflows/build-and-test.yml)
+[![Upload Python Package](https://github.com/LogIntelligence/UNLEASH/actions/workflows/python-publish.yml/badge.svg)](https://github.com/LogIntelligence/UNLEASH/actions/workflows/python-publish.yml)
+<!-- [![Downloads](https://static.pepy.tech/badge/icse-unleash)](https://pepy.tech/projects/icse-unleash) -->
 
 __UNLEASH__ is a semantic-based log parsing framework. This repository includes artifacts for reuse and reproduction of experimental results presented in our ICSE'25 paper titled _"Unleashing the True Potential of Semantic-based Log Parsing with Pre-trained Language Models"_.
 
