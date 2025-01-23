@@ -132,7 +132,7 @@ source env/bin/activate
 You can install UNLEASH from PyPI or build from source.
 ```bash
 # Install from PyPI
-pip install unleash
+pip install icse-unleash
 
 # Build from source
 pip install -e .
