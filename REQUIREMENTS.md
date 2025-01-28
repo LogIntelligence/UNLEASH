@@ -1,5 +1,5 @@
 ## Operating System & Hardware
-We recommend using machines equipped with at least an 4-cores CPU, an 8GB **GPU**, 16GB RAM, and ~50GB available disk space with **Ubuntu 20.04** or **Ubuntu 22.04** to stably reproduce the experimental results in our paper.  
+We recommend using machines equipped with at least an 4-cores CPU, an 8GB **GPU**, 16GB RAM, and ~50GB available disk space with **Ubuntu 20.04** or **Ubuntu 22.04** to stably reproduce the experimental results in our paper.
 
 ## Software
 
