@@ -2,41 +2,51 @@
 [![pypi package](https://img.shields.io/pypi/v/icse-unleash.svg)](https://pypi.org/project/icse-unleash/)
 [![Build and test](https://github.com/LogIntelligence/UNLEASH/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/LogIntelligence/UNLEASH/actions/workflows/build-and-test.yml)
 [![Upload Python Package](https://github.com/LogIntelligence/UNLEASH/actions/workflows/python-publish.yml/badge.svg)](https://github.com/LogIntelligence/UNLEASH/actions/workflows/python-publish.yml)
-<!-- [![Downloads](https://static.pepy.tech/badge/icse-unleash)](https://pepy.tech/projects/icse-unleash) -->
+[![Archived](https://archive.softwareheritage.org/badge/origin/https://github.com/LogIntelligence/UNLEASH)](https://archive.softwareheritage.org/browse/origin/https://github.com/LogIntelligence/UNLEASH/)
 
 __UNLEASH__ is a semantic-based log parsing framework. This repository includes artifacts for reuse and reproduction of experimental results presented in our ICSE'25 paper titled _"Unleashing the True Potential of Semantic-based Log Parsing with Pre-trained Language Models"_.
 
 __Table of Contents__
-- [Repository Structure](#repository-structure)
-- [Installation Instruction](#installation-instruction)
+- [Purpose](#repository-structure)
+- [Provenacne](#provenance)
+- [Data](#data)
+- [Setup](#setup)
     - [Install Python 3.9](#install-python-39)
     - [Clone UNLEASH from GitHub](#clone-unleash-from-github)
     - [Create and activate a virtual environment](#create-and-activate-a-virtual-environment)
     - [Install UNLEASH from PyPI or Build from source](#install-unleash-from-pypi-or-build-from-source)
+- [Usage](#to-run-the-code)
     - [Test the installation](#test-the-installation)
-- [To run the code](#to-run-the-code)
-- [Reproducibility](#reproducibility)
-    - [Parsing Performance](#parsing-performance)
-    - [Scalability and Generalization](#scalability-and-generalization)
-    - [Other Settings](#other-settings)
+    - [Basic usage](#basic-usage)
+        - [Run sampling for a specific dataset](#1-run-sampling-for-a-specific-dataset)
+        - [Run UNLEASH on a specific dataset](#2-run-unleash-on-a-specific-dataset)
+        - [Evaluate Unleash on a specific dataset](#3-evaluate-unleash-on-a-specific-dataset)
+    - [Reproducibility](#reproducibility)
+        - [Parsing Performance](#parsing-performance)
+        - [Scalability and Generalization](#scalability-and-generalization)
+        - [Other Settings](#other-settings)
 - [Download Paper](#download-paper)
 - [Citation](#citation)
 - [Contact](#contact)
 
-## Repository Structure
+## Purpose
 
-There are three main components in the repository:
-1. `datasets`: Contains the log datasets used in the experiments.
-2. `examples`: Contains the scripts to run the experiments.
-3. `unleash`: Contains the implementation of UNLEASH.
+The artifacts in this repository provides the UNLEASH tool along with the neccessary benchmarks and scripts, facilitating its reuse and enabling the replication of the associated study.
 
-<details>
-<Summary>The main structure of the repository would look like this</Summary>
+## Provenance
 
+Our artifacts are available via public archival repositories, including:
+- A copy of the paper is available at: [docs/paper/ICSE_25__Unleash.pdf](docs/paper/ICSE_25___Unleash.pdf).
+- The archival repository is available at: https://archive.softwareheritage.org/browse/origin/https://github.com/LogIntelligence/UNLEASH/.
+- The datasets are adopted from existing works, which are publicly available at: https://zenodo.org/record/8275861.
+
+## Data
+
+The datasets used in the study are publicly available at: https://zenodo.org/record/8275861. The storage requirements for the datasets are approximately 966 MB (compressed) and 13 GB (uncompressed) for 14 datasets.
+
+During the operation of UNLEASH, the datasets will be automatically downloaded and extracted to the `datasets` folder by default. You can also download the datasets manually and extract them in the `datasets` folder. The datasets should be organized as follows:
 ```
 📦 UNLEASH
-├─ LICENSE
-├─ README.md
 ├─ datasets
 │  └─ loghub-2.0
 │     ├─ Apache
@@ -46,66 +56,11 @@ There are three main components in the repository:
 │     │  ├─ Apache_full.log_templates.csv
 │     │  └─ Apache_full.log_templates_corrected.csv
 │     ├─ ...
-├─ docs
-│  ├─ CL.png
-│  ├─ Ob2_res.png
-│  ├─ Ob3_res.png
-│  ├─ RESULTS.md
-│  └─ S_test_1.png
-├─ environment.yml
-├─ examples
-│  ├─ 01_sampling.py
-│  ├─ 02_run_unleash.py
-│  ├─ 03_evaluation.py
-│  ├─ benchmark.py
-│  └─ config.py
-├─ requirements.txt
-├─ setup.py
-├─ tests
-│  └─ test.py
-└─ unleash
-   ├─ __init__.py
-   ├─ arguments.py
-   ├─ data
-   │  ├─ __init__.py
-   │  ├─ data_loader.py
-   │  └─ utils.py
-   ├─ evaluation
-   │  ├─ settings.py
-   │  └─ utils
-   │     ├─ GA_calculator.py
-   │     ├─ PA_calculator.py
-   │     ├─ common.py
-   │     ├─ evaluator_main.py
-   │     ├─ oracle_template_correction.py
-   │     ├─ post_process.py
-   │     ├─ postprocess.py
-   │     └─ template_level_analysis.py
-   ├─ models
-   │  ├─ __init__.py
-   │  ├─ base.py
-   │  ├─ deberta.py
-   │  └─ roberta.py
-   ├─ parsing_base.py
-   ├─ parsing_cache.py
-   ├─ postprocess.py
-   ├─ sampling
-   │  ├─ __init__.py
-   │  ├─ entropy_sampling.py
-   │  ├─ lilac_sampling.py
-   │  ├─ logppt_sampling.py
-   │  └─ utils.py
-   └─ tuning
-      ├─ __init__.py
-      ├─ early_stopping.py
-      ├─ trainer.py
-      └─ utils.py
 ```
-</details>
 
 
-## Installation Instruction
-The code is implemented in Python 3.9.
+## Setup
+The code is implemented in Python 3.9. We recommend using machines equipped with at least an 4-cores CPU, an 8GB **GPU**, 16GB RAM, and ~50GB available disk space with **Ubuntu 20.04** or **Ubuntu 22.04** to stably reproduce the experimental results in our paper. The full requirements to run the code can be found at [REQUIREMENTS.md](REQUIREMENTS.md).
 
 ### Install Python 3.9
 We recommend using Python 3.9+ to run the code.
@@ -138,6 +93,8 @@ pip install icse-unleash
 pip install -e .
 ```
 
+## Usage
+
 ### Test the installation
 ```bash
 pytest tests/test.py
@@ -158,14 +115,16 @@ tests/test.py ...                                                          [100%
 ```
 </details>
 
-## To run the code
+
+### Basic usage
+
 To perform log parsing on a specific dataset, you need to set the `dataset` parameter and set the working directory to the `examples` folder.
 ```bash
 export dataset=Apache
 cd examples
 ```
 
-### 1. Run sampling for a specific dataset
+#### 1. Run sampling for a specific dataset
 ```bash
 python 01_sampling.py --dataset $dataset --sampling_method unleash
 ```
@@ -213,7 +172,7 @@ Shot:  256 Coarse size:  25
 </details>
 
 
-### 2. Run UNLEASH on a specific dataset
+#### 2. Run UNLEASH on a specific dataset
 ```bash
 python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path roberta-base --train_file ../datasets/loghub-2.0/$dataset/samples/unleash_32.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes 1 --output_dir ../results --max_train_steps 1000
 ```
@@ -254,7 +213,7 @@ Parsing: 100%|██████████████████████
 ```
 </details>
 
-### 3. Evaluate Unleash on a specific dataset
+#### 3. Evaluate Unleash on a specific dataset
 ```bash
 python 03_evaluation.py --output_dir ../results --dataset $dataset
 ```
@@ -280,9 +239,9 @@ Template-level accuracy calculation done. [Time taken: 0.010]
 ```
 </details>
 
-## Reproducibility
+### Reproducibility
 
-### Parsing Performance
+#### Parsing Performance
 
 To reproduce the parsing performance, you can run the following command:
 ```bash
@@ -292,7 +251,7 @@ bash benchmark.sh
 
 The parsing accuracy (`parsing_accuracy.csv`) and parsing time (`time_cost.json`) will be saved in the corresponding folders in the `../results` directory (e.g., `../results/iteration_01/logs`). 
 
-### Scalability and Generalization
+#### Scalability and Generalization
 
 - Scalability: The scalability of UNLEASH is reflected in the parsing time and accuracy with different numbers of parsing processes. To run UNLEASH with different numbers of parsing processes, you can set the `parsing_num_processes` parameter in the `02_run_unleash.py` script and run [Step 2](#2-run-unleash-on-a-specific-dataset) again:
 ```bash
@@ -317,7 +276,7 @@ python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_f
     python 02_run_unleash.py --log_file ../datasets/loghub-2.0/$dataset/${dataset}_full.log_structured.csv --model_name_or_path roberta-base --train_file ../datasets/loghub-2.0/$dataset/samples/unleash_$shot.json --validation_file ../datasets/loghub-2.0/$dataset/validation.json --dataset_name $dataset --parsing_num_processes 1 --output_dir ../results --max_train_steps 1000
     ```
 
-### Other Settings
+#### Other Settings
 
 UNLEASH provides various settings to customize the parsing process. You can set the following **main parameters**:
 - For sampling (Step 1 - `01_sampling.py`):
