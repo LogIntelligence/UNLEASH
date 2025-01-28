@@ -248,8 +248,10 @@ To reproduce the parsing performance, you can run the following command:
 cd examples
 bash benchmark.sh
 ```
-
-The parsing accuracy (`parsing_accuracy.csv`) and parsing time (`time_cost.json`) will be saved in the corresponding folders in the `../results` directory (e.g., `../results/iteration_01/logs`). 
+**Notes:**
+- The parsing accuracy (`parsing_accuracy.csv`) and parsing time (`time_cost.json`) will be saved in the corresponding folders in the `../results` directory (e.g., `../results/iteration_01/logs`).
+- According to our experience, `benchmark.sh` may take up to 15 hours to complete five iterations.
+- The results can differ from our paper due to the randomness of the training process as we report the average results over five iterations.
 
 #### Scalability and Generalization
 
